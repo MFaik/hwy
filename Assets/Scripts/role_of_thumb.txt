@@ -1,0 +1,23 @@
+***** variables
+    Serialized fields -> CamelCase
+    fields -> m_camelCase
+    variables in small scopes (if, functions) -> camelCase
+***** functions ->
+    void OnAliCry() {
+
+    }
+    public void OnAliScream() {
+
+    }
+***** ifs -> 
+    if(){
+        Epik();
+    } else {
+        VeryCool();
+    }
+
+    if()
+        Noice;
+***** comparing ->
+    tags -> object.CompareTag("tag")
+    gameobjects -> GameObject.ReferenceEquals( firstGameObject, secondGameObject)
