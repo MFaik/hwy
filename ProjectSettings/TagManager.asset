@@ -10,6 +10,8 @@ TagManager:
   - EnemyProjectile
   - Room
   - EnemyDespawner
+  - SavePointParent
+  - Interactable
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - Player
   - Ground
   - Ignore Player
-  - 
+  - Interactable
   - 
   - 
   - 

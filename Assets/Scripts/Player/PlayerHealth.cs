@@ -5,13 +5,13 @@ using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] float MaxHealth;
-    public float Health;
+    public int MaxHealth = 5;
+    [HideInInspector] public int Health;
 
     [SerializeField] float IFrameTime = 1f;
     float lastHitTime;
 
-    public UnityEvent<float> OnHealthChange;
+    public UnityEvent<int> OnHealthChange;
 
     void Start() {
         Health = MaxHealth;
@@ -24,24 +24,25 @@ public class PlayerHealth : MonoBehaviour
             if(!enemyHealth){
                 Debug.LogError("Enemy doesn't have EnemyHealth script");
             } else {
-                TakeDamage(enemyHealth.Damage);
+                TakeDamage((int)enemyHealth.Damage);
             }
         } else if(other.CompareTag("EnemyProjectile")){
             Projectile enemyProjectile = other.GetComponent<Projectile>();
             if(!enemyProjectile){
                 Debug.LogError("EnemyProjectile doesn't have Projectile script");
             } else {
-                TakeDamage(enemyProjectile.Damage);
+                TakeDamage((int)enemyProjectile.Damage);
                 enemyProjectile.DestroySelf();
             }
         }
     }
 
-    void TakeDamage(float damage) {
+    void TakeDamage(int damage) {
         if(Time.time - lastHitTime > IFrameTime){
             lastHitTime = Time.time;
             Health -= damage;
             OnHealthChange.Invoke(Health);
+            TimeManager.EditTime(0.5f,.5f);
         }
     }
 }

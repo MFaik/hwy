@@ -18,7 +18,7 @@ public class PlayerAnimationController : MonoBehaviour
     const string VELOCITY_Y = "VelocityY";
     const string GROUNDED = "IsGrounded";
 
-    void Awake() {
+    void Start() {
         m_rigidbody = GetComponent<Rigidbody2D>();
 
         m_animator = GetComponent<Animator>();

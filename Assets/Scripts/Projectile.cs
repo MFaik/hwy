@@ -21,8 +21,10 @@ public class Projectile : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D other) {
+        if(other.CompareTag("EnemyDespawner"))
+            DestroySelf();
         if(DestroyOnGround && other.CompareTag("Ground"))
-            Destroy(gameObject);
+            DestroySelf();
     }
     
     public void DestroySelf() {

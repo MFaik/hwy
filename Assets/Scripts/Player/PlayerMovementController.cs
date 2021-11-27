@@ -40,7 +40,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] float GroundCheckHeight = .1f;
     bool m_grounded;
 
-    void Awake() {
+    void Start() {
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_boxCollider = GetComponent<BoxCollider2D>();
     }
