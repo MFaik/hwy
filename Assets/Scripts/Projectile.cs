@@ -6,11 +6,12 @@ public class Projectile : MonoBehaviour
 {
     public float Damage = 1f;
 
-    [SerializeField] GameObject Self;
+    [SerializeField] GameObject Parent;
 
     [SerializeField] GameObject DestroyParticle;
     [SerializeField] float TimeToLive = 10;
     float m_healthTimer = 0;
+    [SerializeField] bool DestroyOnGround = false;
 
     void Update() {
         if(m_healthTimer >= TimeToLive)
@@ -20,15 +21,16 @@ public class Projectile : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        //????
+        if(DestroyOnGround && other.CompareTag("Ground"))
+            Destroy(gameObject);
     }
     
     public void DestroySelf() {
         if(DestroyParticle)
             Instantiate(DestroyParticle,transform.position,transform.rotation);
-        if(!Self)
+        if(!Parent)
             Destroy(gameObject);
         else 
-            Destroy(Self);
+            Destroy(Parent);
     }
 }

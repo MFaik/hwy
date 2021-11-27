@@ -183,36 +183,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnGrounded:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4423661263791573972}
-        m_TargetAssemblyTypeName: PlayerAnimationController, Assembly-CSharp
-        m_MethodName: OnGrounded
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnJumped:
+      m_Calls: []
+  OnLeftGround:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4423661263791573972}
-        m_TargetAssemblyTypeName: PlayerAnimationController, Assembly-CSharp
-        m_MethodName: OnJumped
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  RunSpeed: 100
-  WalkSpeed: 10
+      m_Calls: []
+  Speed: 100
   RunMaxSpeed: 7
   WalkMaxSpeed: 4
   HorizontalDampOnStop: 1

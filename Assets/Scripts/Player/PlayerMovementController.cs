@@ -8,8 +8,8 @@ public class PlayerMovementController : MonoBehaviour
     BoxCollider2D m_boxCollider;
 
     [Header("Events")]
-    [SerializeField] UnityEvent OnGrounded;
-    [SerializeField] UnityEvent OnJumped;
+    public UnityEvent OnGrounded;
+    public UnityEvent OnLeftGround;
 
     [Header("Movement")]
     [SerializeField] float Speed = 100; 
@@ -55,8 +55,9 @@ public class PlayerMovementController : MonoBehaviour
                 OnGrounded.Invoke();
             m_groundTimer = GroundRememberTime;
             m_grounded = true;
-        } else {
+        } else if(m_grounded){
             m_grounded = false;
+            OnLeftGround.Invoke();
         }
 
         //start jump
@@ -69,7 +70,7 @@ public class PlayerMovementController : MonoBehaviour
             m_jumpTimer = 0;
             m_groundTimer = 0;
             velocity.y = JumpVelocity * 2;
-            OnJumped.Invoke();
+            //OnJumped.Invoke();
         }
         //jump damping
         if(!m_isJumping && velocity.y > 0){

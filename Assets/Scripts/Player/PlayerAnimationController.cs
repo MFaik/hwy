@@ -27,6 +27,9 @@ public class PlayerAnimationController : MonoBehaviour
         PlayerMovementController movementController = GetComponent<PlayerMovementController>();
         m_walkMaxSpeed = movementController.WalkMaxSpeed;
         m_runMaxSpeed = movementController.RunMaxSpeed;
+
+        movementController.OnGrounded.AddListener(OnGrounded);
+        movementController.OnLeftGround.AddListener(OnLeftGround);
     }
 
     void Update() {
@@ -51,7 +54,7 @@ public class PlayerAnimationController : MonoBehaviour
         m_animator.SetBool(GROUNDED,true);
     }
 
-    public void OnJumped() {
+    public void OnLeftGround() {
         m_animator.SetBool(GROUNDED,false);
     }
 }

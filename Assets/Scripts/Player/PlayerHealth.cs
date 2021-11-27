@@ -1,14 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] float MaxHealth;
-    float m_health;
+    public float Health;
+
+    [SerializeField] float IFrameTime = 1f;
+    float lastHitTime;
+
+    public UnityEvent<float> OnHealthChange;
 
     void Start() {
-        m_health = MaxHealth;
+        Health = MaxHealth;
+        lastHitTime = Time.time;
     }
 
     void OnTriggerEnter2D(Collider2D other) {
@@ -31,6 +38,10 @@ public class PlayerHealth : MonoBehaviour
     }
 
     void TakeDamage(float damage) {
-        m_health -= damage;
+        if(Time.time - lastHitTime > IFrameTime){
+            lastHitTime = Time.time;
+            Health -= damage;
+            OnHealthChange.Invoke(Health);
+        }
     }
 }

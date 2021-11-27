@@ -43,6 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22681c8801d53340921260796118590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartVelocity: {x: 0, y: 0}
+  EndVelocity: {x: 0, y: 0}
+  Randomize: 0
   Object: {fileID: 8087999496954195390, guid: df616ae0e169b4248906fc4880daee3f, type: 3}
-  Time: 1
+  Offset: 0
+  Interval: 0.2
   Loop: 0
