@@ -7,9 +7,11 @@ using UnityEngine.SceneManagement;
 public class PlayerSaveLoader : MonoBehaviour
 {
     void Awake() {
+#if UNITY_EDITOR
+        //return;
+#endif
         PlayerHealth playerHealth = GetComponent<PlayerHealth>();
-        SaveObject defaultSaveObject = new SaveObject(0, 0, playerHealth.MaxHealth, playerHealth.MaxHealth);
-        SaveSystem.LoadGame(defaultSaveObject);
+        SaveSystem.LoadGame();
 
         if(SaveSystem.SaveData.SceneBuildIndex != SceneManager.GetActiveScene().buildIndex){
             SceneManager.LoadScene(SaveSystem.SaveData.SceneBuildIndex);
@@ -19,6 +21,6 @@ public class PlayerSaveLoader : MonoBehaviour
         Transform savePointParent = GameObject.FindGameObjectWithTag("SavePointParent").transform;
         transform.position = savePointParent.GetChild(SaveSystem.SaveData.SavePointIndex).position;
 
-        playerHealth.Health = SaveSystem.SaveData.PlayerHealth;
+        playerHealth.MaxHealth = SaveSystem.SaveData.PlayerMaxHealth;
     }
 }

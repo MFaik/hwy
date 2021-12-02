@@ -20,8 +20,13 @@ public class SavePoint : MonoBehaviour
     }
 
     void SaveGame(){
-        SaveSystem.SaveData = new SaveObject(m_sceneBuildIndex, m_savePointIndex, m_playerHealth.MaxHealth, m_playerHealth.Health);
+        SaveSystem.SaveData.SceneBuildIndex = m_sceneBuildIndex;
+        SaveSystem.SaveData.SavePointIndex = m_savePointIndex;
+
         SaveSystem.SaveGame();
+
+        m_playerHealth.Heal();
+
         Instantiate(SaveEffect,transform.position,transform.rotation,transform);
     }
 }

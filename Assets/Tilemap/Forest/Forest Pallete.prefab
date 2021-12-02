@@ -41,6 +41,16 @@ Tilemap:
   m_GameObject: {fileID: 2560737231481677692}
   m_Enabled: 1
   m_Tiles:
+  - first: {x: 0, y: -15, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 132
+      m_TileSpriteIndex: 132
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 0, y: -13, z: 0}
     second:
       serializedVersion: 2
@@ -1627,6 +1637,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 3e713ad975f88784fae1a7edc809683f, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 8274d6f23742a5d4ebf8566a70c7bc77, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 9cf1da9b74126b649a77cdfd8722a37c, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: -3718183937451821611, guid: 417e71cb090dc024ba4563987d66c6fb, type: 3}
@@ -1892,8 +1904,10 @@ Tilemap:
     m_Data: {fileID: 3244109685118648368, guid: 417e71cb090dc024ba4563987d66c6fb, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 1854104563259700688, guid: 417e71cb090dc024ba4563987d66c6fb, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: -5034061168752090764, guid: 5e949de1569bdf449942c49b44564d43, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 132
+  - m_RefCount: 133
     m_Data:
       e00: 1
       e01: 0
@@ -1912,13 +1926,13 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 132
+  - m_RefCount: 133
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: -13, z: 0}
-  m_Size: {x: 17, y: 14, z: 1}
+  m_Origin: {x: 0, y: -15, z: 0}
+  m_Size: {x: 17, y: 16, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -2030,7 +2044,7 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
---- !u!114 &7168323366898546101
+--- !u!114 &7662938046587881207
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

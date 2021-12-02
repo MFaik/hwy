@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(Animator),typeof(SpriteRenderer),typeof(PlayerMovementController))]
+[RequireComponent(typeof(Animator),typeof(SpriteRenderer))]
+[RequireComponent(typeof(PlayerMovementController),typeof(PlayerHealth))]
 public class PlayerAnimationController : MonoBehaviour
 {
     Animator m_animator;
@@ -17,6 +18,10 @@ public class PlayerAnimationController : MonoBehaviour
     const string VELOCITY_X = "VelocityX";
     const string VELOCITY_Y = "VelocityY";
     const string GROUNDED = "IsGrounded";
+    const string TAKE_DAMAGE = "TakeDamage";
+    const string DEATH = "Death";
+    
+    PlayerHealth m_playerHealth;
 
     void Start() {
         m_rigidbody = GetComponent<Rigidbody2D>();
@@ -30,6 +35,9 @@ public class PlayerAnimationController : MonoBehaviour
 
         movementController.OnGrounded.AddListener(OnGrounded);
         movementController.OnLeftGround.AddListener(OnLeftGround);
+
+        m_playerHealth = GetComponent<PlayerHealth>();
+        m_playerHealth.OnHealthChange.AddListener(OnHealthChange);
     }
 
     void Update() {
@@ -49,12 +57,21 @@ public class PlayerAnimationController : MonoBehaviour
             m_mirrored = true;
         }
     }
-    
+
     public void OnGrounded() {
         m_animator.SetBool(GROUNDED,true);
     }
 
     public void OnLeftGround() {
         m_animator.SetBool(GROUNDED,false);
+    }
+
+    public void OnHealthChange(int healthChange) {
+        if(healthChange < 0){
+            if(m_playerHealth.Health > 0)
+                m_animator.SetTrigger(TAKE_DAMAGE);
+            else 
+                m_animator.SetTrigger(DEATH);
+        }
     }
 }

@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 5264159223291064705}
   - component: {fileID: 9016866726649116278}
   - component: {fileID: 947345165634588020}
+  - component: {fileID: 3689419050030383810}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -196,6 +197,23 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
+--- !u!114 &3689419050030383810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5431045976656158526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 5
+  mNoiseOffsets: {x: -972.78284, y: 739.89746, z: 545.8457}
 --- !u!1 &8409942786896936250
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,11 +228,11 @@ GameObject:
   - component: {fileID: 4326532111964981129}
   m_Layer: 0
   m_Name: CM vcam
-  m_TagString: Untagged
+  m_TagString: VirtualCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5583493040102967489
 Transform:
   m_ObjectHideFlags: 0
@@ -237,7 +255,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8409942786896936250}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 
@@ -294,4 +312,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b3aca8a02839741ab7f86554802a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tag: Player
+  FollowTag: Player

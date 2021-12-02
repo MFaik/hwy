@@ -2,7 +2,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public class SaveSystem : MonoBehaviour
+public class SaveSystem
 {    
     static string fileName = "/hwy.cu";
     public static SaveObject SaveData;
@@ -17,7 +17,7 @@ public class SaveSystem : MonoBehaviour
         dataStream.Close();
     }
 
-    public static void LoadGame(SaveObject defaultSaveData) {
+    public static void LoadGame() {
         string filePath = Application.persistentDataPath + fileName;  
 
         if(File.Exists(filePath))
@@ -31,6 +31,6 @@ public class SaveSystem : MonoBehaviour
             SaveData = saveData;
             return;  
         }
-        SaveData = defaultSaveData;
+        SaveData = new SaveObject();
     }
 }

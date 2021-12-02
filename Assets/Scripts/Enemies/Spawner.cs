@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] float Offset = 0f;
     [SerializeField] float Interval = 1f;
     [SerializeField] bool Loop = true;
-
+    
     float m_startTime;
 
     List<GameObject> m_spawnedObjects = new List<GameObject>();
@@ -20,9 +20,6 @@ public class Spawner : MonoBehaviour
     BoxCollider2D m_collider;
 
     void Start() {
-        if(!Loop)
-            Destroy(gameObject,Interval);
-
         m_collider = GetComponent<BoxCollider2D>();
     }
 
@@ -30,7 +27,18 @@ public class Spawner : MonoBehaviour
         if(Time.time - m_startTime > Interval){
             Spawn();
             m_startTime = Time.time;
+            if(!Loop)
+                gameObject.SetActive(false);
         }
+    }
+
+    void OnDisable() {
+        foreach(GameObject obj in m_spawnedObjects){
+            Destroy(obj);
+        }
+    }
+    void OnEnable() {
+        m_startTime = Time.time + (Offset - Interval);    
     }
 
     void Spawn() {
@@ -48,18 +56,8 @@ public class Spawner : MonoBehaviour
             } else 
                 rigidbody.velocity = Velocity;
         }
-           
 
         m_spawnedObjects.Add(newObject);
-    }
-
-    void OnDisable() {
-        foreach(GameObject obj in m_spawnedObjects){
-            Destroy(obj);
-        }
-    }
-    void OnEnable() {
-        m_startTime = Time.time + (Offset - Interval);    
     }
 
     public static Vector3 RandomPointInBounds(Bounds bounds) {

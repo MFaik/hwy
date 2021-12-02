@@ -12,6 +12,7 @@ TagManager:
   - EnemyDespawner
   - SavePointParent
   - Interactable
+  - VirtualCamera
   layers:
   - Default
   - TransparentFX

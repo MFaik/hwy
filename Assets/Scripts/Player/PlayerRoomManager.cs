@@ -7,14 +7,14 @@ using Cinemachine;
 public class PlayerRoomManager : MonoBehaviour
 {
     BoxCollider2D m_boxCollider;
-    CinemachineVirtualCamera m_currentCamera;
+    RoomBoundries m_currentRoom;
     List<Collider2D> m_collidingRooms = new List<Collider2D>();
 
     Vector3[] m_corners = new Vector3[4];
 
     void Start() {
         m_boxCollider = GetComponent<BoxCollider2D>();
-        
+
         Vector2 size = m_boxCollider.size;
         
         float top = (size.y / 2f);
@@ -47,22 +47,11 @@ public class PlayerRoomManager : MonoBehaviour
     }
 
     void SetRoom(Collider2D roomCollider) {
-        if(m_currentCamera){
-            m_currentCamera.enabled = false;
-            //disable old gameObjects
-            Transform lastRoomBoundry = m_currentCamera.transform.parent;
-            for(int i = 0;i < lastRoomBoundry.parent.childCount;i++){
-                if(lastRoomBoundry.GetSiblingIndex() == i)
-                    continue;
-                lastRoomBoundry.parent.GetChild(i).gameObject.SetActive(false);
-            }
+        if(m_currentRoom){
+            m_currentRoom.DisableRoom();
         }
-        m_currentCamera = roomCollider.GetComponentInChildren<CinemachineVirtualCamera>();
-        m_currentCamera.enabled = true;
-        Transform newRoomBoundry = m_currentCamera.transform.parent;
-        for(int i = 0;i < newRoomBoundry.parent.childCount;i++){
-            newRoomBoundry.parent.GetChild(i).gameObject.SetActive(true);
-        }
+        m_currentRoom = roomCollider.GetComponent<RoomBoundries>();
+        m_currentRoom.EnableRoom();
 
         //remove so we don't check the room we are in
         m_collidingRooms.Remove(roomCollider);

@@ -5,15 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class SaveObject
 {
-    public int SceneBuildIndex;
-    public int SavePointIndex;
-    public int MaxPlayerHealth;
-    public int PlayerHealth;
+    public int SceneBuildIndex = 0;
+    public int SavePointIndex = 0;
+    public int PlayerMaxHealth = 5;
 
-    public SaveObject(int SceneBuildIndex, int SavePointIndex, int MaxPlayerHealth, int PlayerHealth) {
-        this.SceneBuildIndex = SceneBuildIndex;
-        this.SavePointIndex = SavePointIndex;
-        this.MaxPlayerHealth = MaxPlayerHealth;
-        this.PlayerHealth = PlayerHealth;
-    }
+    public bool DeafeatedLog = false;
 }

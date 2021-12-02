@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int MaxHealth = 5;
+    [HideInInspector] public int MaxHealth;
     [HideInInspector] public int Health;
 
     [SerializeField] float IFrameTime = 1f;
@@ -13,36 +14,50 @@ public class PlayerHealth : MonoBehaviour
 
     public UnityEvent<int> OnHealthChange;
 
+    Rigidbody2D m_rigidbody;
+
     void Start() {
         Health = MaxHealth;
         lastHitTime = Time.time;
+        m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
     void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Enemy")){
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
-            if(!enemyHealth){
-                Debug.LogError("Enemy doesn't have EnemyHealth script");
-            } else {
-                TakeDamage((int)enemyHealth.Damage);
-            }
+            TakeDamage((int)enemyHealth.Damage);
         } else if(other.CompareTag("EnemyProjectile")){
             Projectile enemyProjectile = other.GetComponent<Projectile>();
-            if(!enemyProjectile){
-                Debug.LogError("EnemyProjectile doesn't have Projectile script");
-            } else {
-                TakeDamage((int)enemyProjectile.Damage);
-                enemyProjectile.DestroySelf();
-            }
+
+            TakeDamage((int)enemyProjectile.Damage);
+            enemyProjectile.DestroySelf();
         }
     }
 
+    public void Heal(){
+        Heal(MaxHealth);
+    }
+
+    public void Heal(int heal){
+        heal = Mathf.Min(heal,MaxHealth-Health);
+        Health += heal;
+        OnHealthChange.Invoke(heal);
+    }
+
     void TakeDamage(int damage) {
-        if(Time.time - lastHitTime > IFrameTime){
+        if(Time.time - lastHitTime > IFrameTime && Health > 0){
             lastHitTime = Time.time;
-            Health -= damage;
-            OnHealthChange.Invoke(Health);
-            TimeManager.EditTime(0.5f,.5f);
+            Health = Mathf.Max(Health-damage,0);
+            OnHealthChange.Invoke(-damage);
+            if(Health <= 0){
+                m_rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+            TimeManager.EditTime(.1f,.05f);
         }
+    }
+
+    public void Die() {
+        Destroy(gameObject);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
