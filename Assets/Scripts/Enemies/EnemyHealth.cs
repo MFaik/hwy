@@ -9,6 +9,8 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] float Health = 3f;
     public float Damage = 1f;
 
+    [SerializeField] bool CanDespawn = true;
+
     void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("PlayerBullet")){
             Projectile playerBulletProjectile = other.GetComponent<Projectile>();
@@ -18,7 +20,7 @@ public class EnemyHealth : MonoBehaviour
                 TakeDamage(playerBulletProjectile.Damage);
                 playerBulletProjectile.DestroySelf();
             }
-        } else if(other.CompareTag("EnemyDespawner")){
+        } else if(CanDespawn && other.CompareTag("EnemyDespawner")){
             GetDestroyed();
         }
     }
