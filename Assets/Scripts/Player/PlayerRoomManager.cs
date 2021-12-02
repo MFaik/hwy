@@ -31,6 +31,8 @@ public class PlayerRoomManager : MonoBehaviour
     void Update() {
         for(int i = 0;i < m_collidingRooms.Count;i++){
             Collider2D collider = m_collidingRooms[i];
+            if(m_currentRoom && GameObject.ReferenceEquals(collider.gameObject, m_currentRoom.gameObject))
+                continue;
             //check if player is completely inside the collider
             bool inside = true;
             foreach(Vector3 corner in m_corners){
@@ -52,9 +54,6 @@ public class PlayerRoomManager : MonoBehaviour
         }
         m_currentRoom = roomCollider.GetComponent<RoomBoundries>();
         m_currentRoom.EnableRoom();
-
-        //remove so we don't check the room we are in
-        m_collidingRooms.Remove(roomCollider);
     }
     
     void OnTriggerEnter2D(Collider2D other) {
