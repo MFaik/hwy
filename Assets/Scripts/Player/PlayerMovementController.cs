@@ -98,7 +98,6 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         m_rigidbody.velocity = velocity;
-
     }
 
     public void OnMovement(InputAction.CallbackContext value) {

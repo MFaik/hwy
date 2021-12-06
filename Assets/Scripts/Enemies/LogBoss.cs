@@ -187,6 +187,6 @@ public class LogBoss : MonoBehaviour
         LeftWallDespawner.SetActive(true);
         RightWallDespawner.SetActive(true);
 
-        yield return new WaitUntil(()=>!logInstance);//this will end early if you take damage from the last log
+        yield return new WaitForSeconds(5f);//this will end early if you take damage from the last log
     }  
 }

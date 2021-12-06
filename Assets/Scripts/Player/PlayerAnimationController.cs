@@ -23,6 +23,9 @@ public class PlayerAnimationController : MonoBehaviour
     
     PlayerHealth m_playerHealth;
 
+    [SerializeField] ParticleSystem JumpDustParticle;
+    [SerializeField] ParticleSystem TurnDustParticle;
+
     void Start() {
         m_rigidbody = GetComponent<Rigidbody2D>();
 
@@ -52,22 +55,34 @@ public class PlayerAnimationController : MonoBehaviour
         if(m_mirrored && m_rigidbody.velocity.x > 0.001f){
             m_spriteRenderer.flipX = false;
             m_mirrored = false;
+            if(m_grounded)
+                TurnDustParticle.Play();
         } else if(!m_mirrored && m_rigidbody.velocity.x < -0.001f){
             m_spriteRenderer.flipX = true;
             m_mirrored = true;
+            if(m_grounded)
+                TurnDustParticle.Play();
         }
     }
 
     public void OnGrounded() {
         m_animator.SetBool(GROUNDED,true);
+        m_grounded = true;
     }
 
     public void OnLeftGround() {
         m_animator.SetBool(GROUNDED,false);
+        if(m_rigidbody.velocity.y > 0.01f)
+            JumpDustParticle.Play();
+        
+        TurnDustParticle.Stop();
+        m_grounded = false;
     }
 
     public void OnHealthChange(int healthChange) {
         if(healthChange < 0){
+            CameraManager.ShakeCamera(1f,.1f);
+
             if(m_playerHealth.Health > 0)
                 m_animator.SetTrigger(TAKE_DAMAGE);
             else 

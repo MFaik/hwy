@@ -13,6 +13,7 @@ TagManager:
   - SavePointParent
   - Interactable
   - VirtualCamera
+  - ParticleRenderer
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Ground
   - Ignore Player
   - Interactable
-  - 
+  - Particles
   - 
   - 
   - 

@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 2
-  Self: {fileID: 0}
-  DestroyParticle: {fileID: 1885151368705585149, guid: ad5639dbc5cbd13448ed24406198c410, type: 3}
+  Parent: {fileID: 0}
+  DestroyParticle: {fileID: 0}
   TimeToLive: 6
+  DestroyOnGround: 0
