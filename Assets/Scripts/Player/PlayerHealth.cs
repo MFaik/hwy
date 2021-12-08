@@ -57,7 +57,6 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public void Die() {
-        Destroy(gameObject);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

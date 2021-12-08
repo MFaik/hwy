@@ -5,25 +5,37 @@ using UnityEngine;
 
 public class PlayerIntreactManager : MonoBehaviour
 {
-    [SerializeField] float InteractRadius = 2f;
-    [SerializeField] LayerMask InteractableMask;
     [SerializeField] LayerMask BlockInteraction;
+
+    List<Transform> m_interactObjects = new List<Transform>();
+
+    [System.NonSerialized] public bool CanInteract = true;
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if(other.CompareTag("Interactable"))
+            m_interactObjects.Add(other.transform);
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        if(other.CompareTag("Interactable"))
+            m_interactObjects.Remove(other.transform);    
+    }
 
     public void OnInteract(InputAction.CallbackContext value) {
         if(value.phase == InputActionPhase.Started){
-            RaycastHit2D[] raycastHit = Physics2D.CircleCastAll(transform.position,InteractRadius,Vector2.down,0f,InteractableMask);
-            if(raycastHit.Length > 0){
-                float distance = -1;
-                Transform closestObject = null;
-                for(int i = 0;i < raycastHit.Length;i++){
-                    if(distance == -1 || (raycastHit[i].transform.position-transform.position).sqrMagnitude < distance){
-                        if(!Physics2D.Linecast(transform.position,raycastHit[i].transform.position,BlockInteraction))    
-                            closestObject = raycastHit[i].transform;
-                    }
+            if(m_interactObjects.Count <= 0 || !CanInteract)
+                return;
+
+            Transform closestObject = null;    
+            float distance = -1;
+            for(int i = 0;i < m_interactObjects.Count;i++){
+                if(distance == -1 || (m_interactObjects[i].position-transform.position).sqrMagnitude < distance){
+                    if(!Physics2D.Linecast(transform.position,m_interactObjects[i].position,BlockInteraction))    
+                        closestObject = m_interactObjects[i];
                 }
-                if(closestObject)
-                    closestObject.GetComponent<Interactable>().Interact();
             }
+            if(closestObject)
+                closestObject.GetComponent<Interactable>().Interact();
         }
     }
 }

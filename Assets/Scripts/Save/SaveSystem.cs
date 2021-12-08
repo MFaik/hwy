@@ -4,10 +4,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class SaveSystem
 {    
-    static string fileName = "/hwy.cu";
+    static string s_fileName = "/hwy.cu";
     public static SaveObject SaveData;
     public static void SaveGame() {
-        string filePath = Application.persistentDataPath + fileName;  
+        string filePath = Application.persistentDataPath + s_fileName;  
 
         FileStream dataStream = new FileStream(filePath, FileMode.Create);
 
@@ -18,7 +18,7 @@ public class SaveSystem
     }
 
     public static void LoadGame() {
-        string filePath = Application.persistentDataPath + fileName;  
+        string filePath = Application.persistentDataPath + s_fileName;  
 
         if(File.Exists(filePath))
         {

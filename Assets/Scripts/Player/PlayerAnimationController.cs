@@ -22,6 +22,8 @@ public class PlayerAnimationController : MonoBehaviour
     const string DEATH = "Death";
     
     PlayerHealth m_playerHealth;
+    PlayerMovementController m_playerMovement;
+    PlayerIntreactManager m_playerInteract;
 
     [SerializeField] ParticleSystem JumpDustParticle;
     [SerializeField] ParticleSystem TurnDustParticle;
@@ -32,15 +34,20 @@ public class PlayerAnimationController : MonoBehaviour
         m_animator = GetComponent<Animator>();
         m_spriteRenderer = GetComponent<SpriteRenderer>();
 
-        PlayerMovementController movementController = GetComponent<PlayerMovementController>();
-        m_walkMaxSpeed = movementController.WalkMaxSpeed;
-        m_runMaxSpeed = movementController.RunMaxSpeed;
+        m_playerMovement = GetComponent<PlayerMovementController>();
+        m_walkMaxSpeed = m_playerMovement.WalkMaxSpeed;
+        m_runMaxSpeed = m_playerMovement.RunMaxSpeed;
 
-        movementController.OnGrounded.AddListener(OnGrounded);
-        movementController.OnLeftGround.AddListener(OnLeftGround);
+        m_playerMovement.OnGrounded.AddListener(OnGrounded);
+        m_playerMovement.OnLeftGround.AddListener(OnLeftGround);
 
         m_playerHealth = GetComponent<PlayerHealth>();
         m_playerHealth.OnHealthChange.AddListener(OnHealthChange);
+
+        m_playerInteract = GetComponent<PlayerIntreactManager>();
+
+        TextManager.OnTextStart.AddListener(StartAnimation);
+        TextManager.OnTextFinish.AddListener(StopAnimation);
     }
 
     void Update() {
@@ -88,5 +95,15 @@ public class PlayerAnimationController : MonoBehaviour
             else 
                 m_animator.SetTrigger(DEATH);
         }
+    }
+
+    public void StartAnimation() {
+        m_playerMovement.CanMove = false;
+        m_playerInteract.CanInteract = false;
+    }
+
+    public void StopAnimation() {
+        m_playerMovement.CanMove = true;
+        m_playerInteract.CanInteract = true;
     }
 }

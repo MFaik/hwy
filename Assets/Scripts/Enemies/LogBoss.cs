@@ -55,7 +55,7 @@ public class LogBoss : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other) {
         CameraManager.ShakeCamera(1,0.2f);
         foreach(ContactPoint2D contact in other.contacts)   
-        Instantiate(HitEffect, contact.point, Quaternion.identity);
+            Instantiate(HitEffect, contact.point, Quaternion.identity);
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Finish")){
@@ -125,6 +125,7 @@ public class LogBoss : MonoBehaviour
             default:
                 GroundDestructable2.GetDestroyed();
                 m_rigidbody.velocity = new Vector2(0,-5);
+                LeafSpawner.SetActive(false);
                 yield break;
         }
 

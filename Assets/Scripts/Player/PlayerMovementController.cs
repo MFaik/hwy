@@ -40,6 +40,8 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] float GroundCheckHeight = .1f;
     bool m_grounded;
 
+    [System.NonSerialized] public bool CanMove = true;
+
     void Start() {
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_boxCollider = GetComponent<BoxCollider2D>();
@@ -97,7 +99,8 @@ public class PlayerMovementController : MonoBehaviour
             velocity.x *= Mathf.Pow(1f - HorizontalDampOnTurn,Time.deltaTime * 10f);
         }
 
-        m_rigidbody.velocity = velocity;
+        if(CanMove)
+            m_rigidbody.velocity = velocity;
     }
 
     public void OnMovement(InputAction.CallbackContext value) {
