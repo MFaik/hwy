@@ -46,8 +46,8 @@ public class PlayerAnimationController : MonoBehaviour
 
         m_playerInteract = GetComponent<PlayerIntreactManager>();
 
-        TextManager.OnTextStart.AddListener(StartAnimation);
-        TextManager.OnTextFinish.AddListener(StopAnimation);
+        TextBoxManager.OnTextStart.AddListener(StartAnimation);
+        TextBoxManager.OnTextFinish.AddListener(StopAnimation);
     }
 
     void Update() {
@@ -98,6 +98,7 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     public void StartAnimation() {
+        m_rigidbody.velocity = Vector2.zero;
         m_playerMovement.CanMove = false;
         m_playerInteract.CanInteract = false;
     }

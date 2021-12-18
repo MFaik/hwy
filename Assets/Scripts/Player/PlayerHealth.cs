@@ -34,11 +34,11 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void Heal(){
+    public void Heal() {
         Heal(MaxHealth);
     }
 
-    public void Heal(int heal){
+    public void Heal(int heal) {
         heal = Mathf.Min(heal,MaxHealth-Health);
         Health += heal;
         OnHealthChange.Invoke(heal);
@@ -57,6 +57,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public void Die() {
+        SaveSystem.SaveData = null;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

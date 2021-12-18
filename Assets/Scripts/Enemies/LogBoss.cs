@@ -61,8 +61,7 @@ public class LogBoss : MonoBehaviour
         if(other.CompareTag("Finish")){
             PlatformDestructible.GetDestroyed();
             transform.DOMove(DonePosition,.4f).OnComplete(()=>{
-                DoneLog.SetActive(true);
-                SaveSystem.SaveData.DeafeatedLog = true;
+                SaveSystem.SetProgress(ProgressEnum.LogBossDefeated,true);
                 Destroy(gameObject);
             });
             m_rigidbody.simulated = false;

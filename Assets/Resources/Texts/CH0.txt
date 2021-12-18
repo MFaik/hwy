@@ -1,0 +1,22 @@
+Bush {
+    [Sleeping]
+        Bush "<emote=tired>..."
+    [!Talked & !#LogBossDefeated]
+        Bush "Hello traveler.\nNormally I'd try to stop you from entering the forest or something."
+        Bush "<emote=mad>But I cannot sleep because its <speed=15>\n<size=120%><align=center>SHAKING SO MUCH.</align>"
+        Bush "The <color=#A9A9A9>SFO <color=#FFFFFF> hasn't been doing anything either."
+        Bush "<emote=neutral>I don't think they care about the forest anymore...<set=Talked>"
+    [Talked & !#LogBossDefeated]
+        Bush "<emote=mad>Can you leave me alone?"
+        Bush "Trying to sleep here!"
+    [!Talked & #LogBossDefeated]
+        Bush "Thanks for stopping that stupid log."
+        Bush "Now finally I can sleep."
+        Bush "I feel like you deserve it more than me right now, so <speed=8>..."
+        Bush "You can have this <b>HAT</b><trigger=0=Give Hat and Sleep>"
+        Bush "<emote=tired>Maybe it'll help you disguise.<set=Sleeping>"
+    [Talked & #LogBossDefeated]
+        Bush "Didn't think you would actually stop him."
+        Bush "You can take this <b>hat</b> as gift.<trigger=0=Give Hat and Sleep>"
+        Bush "<emote=tired>I am gonna sleep.<set=Sleeping>"
+}

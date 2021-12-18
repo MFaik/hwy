@@ -10,7 +10,7 @@ public class HealthUI : MonoBehaviour
     int m_maxHealth;
     int m_health;
 
-    void Start(){
+    void Start() {
         PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         playerHealth.OnHealthChange.AddListener(UpdateHealth);
         

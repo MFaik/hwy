@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [System.Serializable]
 public class SaveObject
@@ -9,5 +7,10 @@ public class SaveObject
     public int SavePointIndex = 0;
     public int PlayerMaxHealth = 5;
 
-    public bool DeafeatedLog = false;
+    public Dictionary<ProgressEnum, bool> m_progress = new Dictionary<ProgressEnum, bool>(){
+        {ProgressEnum.LogBossDefeated, false},
+        {ProgressEnum.PlayerHasHat, false},
+        {ProgressEnum.PlayerHasGun, false}
+    };
+    public Dictionary<string, bool> dialogueFlags = new Dictionary<string, bool>();
 }

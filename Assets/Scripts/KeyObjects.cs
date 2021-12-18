@@ -5,8 +5,7 @@ using UnityEngine;
 public class KeyObjects : MonoBehaviour
 {
     
-    void Awake()
-    {
+    void Awake() {
         ActivateChildren();
     }
 

@@ -10106,10 +10106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4755fed2338f72244b8e59c79382a1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractRadius: 2
-  InteractableMask:
-    serializedVersion: 2
-    m_Bits: 1024
   BlockInteraction:
     serializedVersion: 2
     m_Bits: 256
@@ -10155,7 +10151,7 @@ ParticleSystem:
   serializedVersion: 7
   lengthInSec: 0.5
   simulationSpeed: 1
-  stopAction: 1
+  stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}

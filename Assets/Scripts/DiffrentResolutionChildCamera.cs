@@ -12,8 +12,7 @@ public class DiffrentResolutionChildCamera : MonoBehaviour
 
     RawImage m_particleRenderer;
     
-    void Start()
-    {
+    void Start() {
         m_parentCamera = transform.parent.GetComponent<Camera>();
         m_camera = GetComponent<Camera>();
     
@@ -22,8 +21,7 @@ public class DiffrentResolutionChildCamera : MonoBehaviour
         SetRenderTexture();
     }
 
-    void Update()
-    {
+    void Update() {
         if(m_camera.orthographicSize != m_parentCamera.orthographicSize){
             RenderTextureSize *= m_parentCamera.orthographicSize/m_camera.orthographicSize;
             SetRenderTexture();

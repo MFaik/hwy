@@ -10,8 +10,7 @@ public class SavePoint : MonoBehaviour
 
     PlayerHealth m_playerHealth;
     int m_sceneBuildIndex,m_savePointIndex;   
-    void Start()
-    {
+    void Start() {
         m_playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         m_sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
         m_savePointIndex = transform.GetSiblingIndex();
@@ -19,7 +18,7 @@ public class SavePoint : MonoBehaviour
         GetComponent<Interactable>().OnInteract.AddListener(SaveGame);
     }
 
-    void SaveGame(){
+    void SaveGame() {
         SaveSystem.SaveData.SceneBuildIndex = m_sceneBuildIndex;
         SaveSystem.SaveData.SavePointIndex = m_savePointIndex;
 

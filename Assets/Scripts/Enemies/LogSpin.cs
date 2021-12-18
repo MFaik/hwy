@@ -5,14 +5,12 @@ using UnityEngine;
 public class LogSpin : MonoBehaviour
 {
     Rigidbody2D m_rigidbody;
-    void Start()
-    {
+    void Start() {
         m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         m_rigidbody.angularVelocity = -m_rigidbody.velocity.x*15;
     }
 }
