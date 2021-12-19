@@ -1,11 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-[RequireComponent(typeof(Rigidbody2D),typeof(BoxCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovementController : MonoBehaviour
 {
     Rigidbody2D m_rigidbody;
-    BoxCollider2D m_boxCollider;
 
     [Header("Events")]
     public UnityEvent OnGrounded;
@@ -35,44 +34,29 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] float GroundRememberTime = .1f;
     float m_groundTimer;
 
-    [Header("Ground Checker")]
-    [SerializeField] LayerMask GroundLayerMask;
-    [SerializeField] float GroundCheckHeight = .1f;
     bool m_grounded;
 
     [System.NonSerialized] public bool CanMove = true;
 
     void Start() {
         m_rigidbody = GetComponent<Rigidbody2D>();
-        m_boxCollider = GetComponent<BoxCollider2D>();
     }
 
     void FixedUpdate() {
         Vector2 velocity = m_rigidbody.velocity;
 
-        //groundCheck
-        RaycastHit2D raycastHit = Physics2D.BoxCast(m_boxCollider.bounds.center,m_boxCollider.bounds.size,0,Vector2.down,GroundCheckHeight,GroundLayerMask);
-        if(raycastHit.collider != null){
-            if(!m_grounded)
-                OnGrounded.Invoke();
-            m_groundTimer = GroundRememberTime;
-            m_grounded = true;
-        } else if(m_grounded){
-            m_grounded = false;
-            OnLeftGround.Invoke();
-        }
-
         //start jump
         if(m_jumpTimer >= 0)
             m_jumpTimer -= Time.deltaTime;
-        if(m_groundTimer >= 0)
+        if(!m_grounded && m_groundTimer >= 0)
             m_groundTimer -= Time.deltaTime;
+        else if(m_grounded)
+            m_groundTimer = GroundRememberTime;
 
         if((m_jumpTimer > 0) && (m_groundTimer > 0)){
             m_jumpTimer = 0;
             m_groundTimer = 0;
             velocity.y = JumpVelocity * 2;
-            //OnJumped.Invoke();
         }
         //jump damping
         if(!m_isJumping && velocity.y > 0){
@@ -103,6 +87,15 @@ public class PlayerMovementController : MonoBehaviour
             m_rigidbody.velocity = velocity;
     }
 
+    public void GetGrounded() {
+        OnGrounded.Invoke();
+        m_groundTimer = GroundRememberTime;
+        m_grounded = true;
+    }
+    public void LeaveGround() {
+        OnLeftGround.Invoke();
+        m_grounded = false;
+    }
     public void OnMovement(InputAction.CallbackContext value) {
         m_movement = value.ReadValue<float>();
     }
