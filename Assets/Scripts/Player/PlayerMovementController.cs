@@ -11,13 +11,11 @@ public class PlayerMovementController : MonoBehaviour
     public UnityEvent OnLeftGround;
 
     [Header("Movement")]
-    [SerializeField] float Speed = 100; 
-    public float RunMaxSpeed = 7;
-    public float WalkMaxSpeed = 4;
-    bool m_isWalking;
-    [SerializeField, Range(0,1)] float HorizontalDampOnStop = .8f;
-    [SerializeField, Range(0,1)] float HorizontalDampOnTurn = .9f;
-    float m_movement;
+    [SerializeField] float Acceleration = 40; 
+    public float MaxSpeed = 7;
+    [SerializeField, Range(0,1)] float HorizontalDampOnStop = .9f;
+    [SerializeField, Range(0,1)] float HorizontalDampOnTurn = 1f;
+    public float MovementInput;
     
     [Header("Jump Physics")]
     [SerializeField] float JumpVelocity = 5f;
@@ -36,13 +34,18 @@ public class PlayerMovementController : MonoBehaviour
 
     bool m_grounded;
 
-    [System.NonSerialized] public bool CanMove = true;
+    [System.NonSerialized] public int RestrictionCounter = 0;
 
     void Start() {
         m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate() {
+        if(RestrictionCounter > 0){
+            // Debug.Log(RestrictionCounter);
+            return;
+        }
+
         Vector2 velocity = m_rigidbody.velocity;
 
         //start jump
@@ -73,18 +76,25 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         //movement
-        velocity.x += m_movement * Speed * Time.deltaTime;
-        float m_currentMaxSpeed = m_isWalking ? WalkMaxSpeed : RunMaxSpeed;
-        velocity.x = Mathf.Clamp(velocity.x,-m_currentMaxSpeed,m_currentMaxSpeed);
+        float movementVelocity = MovementInput * Acceleration * Time.deltaTime;
 
-        if(m_movement == 0){
+        if(Mathf.Abs(velocity.x + movementVelocity) >= MaxSpeed){
+            if(movementVelocity > 0){
+                movementVelocity = Mathf.Max(0, MaxSpeed - velocity.x);
+            } else if(movementVelocity < 0){
+                movementVelocity = Mathf.Min(0,-MaxSpeed - velocity.x);
+            }
+        }
+
+        velocity.x += movementVelocity;
+
+        if(MovementInput == 0){
             velocity.x *= Mathf.Pow(1f - HorizontalDampOnStop,Time.deltaTime * 10f); 
-        } else if((m_movement > 0) != (velocity.x > 0)){
+        } else if((MovementInput > 0) != (velocity.x > 0)){
             velocity.x *= Mathf.Pow(1f - HorizontalDampOnTurn,Time.deltaTime * 10f);
         }
 
-        if(CanMove)
-            m_rigidbody.velocity = velocity;
+        m_rigidbody.velocity = velocity;
     }
 
     public void GetGrounded() {
@@ -97,15 +107,7 @@ public class PlayerMovementController : MonoBehaviour
         m_grounded = false;
     }
     public void OnMovement(InputAction.CallbackContext value) {
-        m_movement = value.ReadValue<float>();
-    }
-    public void OnSneak(InputAction.CallbackContext value) {
-        if(value.phase == InputActionPhase.Started){
-            m_isWalking = true;
-        }
-        else if(value.phase == InputActionPhase.Canceled){
-            m_isWalking = false;
-        }
+        MovementInput = value.ReadValue<float>();
     }
     public void OnJump(InputAction.CallbackContext value) {
         if(value.phase == InputActionPhase.Started){

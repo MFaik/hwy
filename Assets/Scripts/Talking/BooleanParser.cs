@@ -13,6 +13,9 @@ public static class BooleanParser
 
     static int s_pointer;
     public static bool Parse(string str) {
+        str = str.Replace(" ","");
+        if(str == "")
+            return false;
         Tokenize(str);
 
         s_pointer = 0;
@@ -21,7 +24,6 @@ public static class BooleanParser
 
     static void Tokenize(string str) {
         s_tokens = new List<BooleanToken>();
-        str = str.Replace(" ","");
         foreach(char c in str){
             if(c == '!')
                 s_tokens.Add(BooleanToken.LogicNot);

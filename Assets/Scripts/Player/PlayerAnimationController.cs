@@ -28,16 +28,13 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] ParticleSystem JumpDustParticle;
     [SerializeField] ParticleSystem TurnDustParticle;
 
-    void Start() {
+    void Start() {//FIXME: when player is destroyed what happens to Listeners? 
         m_rigidbody = GetComponent<Rigidbody2D>();
 
         m_animator = GetComponent<Animator>();
         m_spriteRenderer = GetComponent<SpriteRenderer>();
 
         m_playerMovement = GetComponent<PlayerMovementController>();
-        m_walkMaxSpeed = m_playerMovement.WalkMaxSpeed;
-        m_runMaxSpeed = m_playerMovement.RunMaxSpeed;
-
         m_playerMovement.OnGrounded.AddListener(OnGrounded);
         m_playerMovement.OnLeftGround.AddListener(OnLeftGround);
 
@@ -51,20 +48,18 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     void Update() {
-        float VelocityX = (Mathf.Abs(m_rigidbody.velocity.x) > 0.001f) ? 2 : 0;
-        if(Mathf.Abs(m_rigidbody.velocity.x) <= m_walkMaxSpeed)
-            VelocityX /= 2;
-
+        float VelocityX = (Mathf.Abs(m_rigidbody.velocity.x) > 0.1f && Mathf.Abs(m_playerMovement.MovementInput) > 0) ? 1 : 0;
         m_animator.SetFloat(VELOCITY_X,VelocityX);
-        
-        m_animator.SetFloat(VELOCITY_Y,m_rigidbody.velocity.y);
 
-        if(m_mirrored && m_rigidbody.velocity.x > 0.001f){
+        float VelocityY = (Mathf.Abs(m_rigidbody.velocity.y) > 0.1f) ? m_rigidbody.velocity.y : 0;
+        m_animator.SetFloat(VELOCITY_Y,VelocityY);
+
+        if(m_mirrored && m_playerMovement.MovementInput > 0.001f){
             m_spriteRenderer.flipX = false;
             m_mirrored = false;
             if(m_grounded)
                 TurnDustParticle.Play();
-        } else if(!m_mirrored && m_rigidbody.velocity.x < -0.001f){
+        } else if(!m_mirrored && m_playerMovement.MovementInput < -0.001f){
             m_spriteRenderer.flipX = true;
             m_mirrored = true;
             if(m_grounded)
@@ -98,13 +93,19 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     public void StartAnimation() {
-        m_rigidbody.velocity = Vector2.zero;
-        m_playerMovement.CanMove = false;
+        StartAnimation(true);
+    }
+
+    public void StartAnimation(bool stop) {
+        // Debug.Log((new System.Diagnostics.StackTrace()).GetFrame(1).GetMethod().Name);
+        if(stop)
+            m_rigidbody.velocity = Vector2.zero;
+        m_playerMovement.RestrictionCounter++;
         m_playerInteract.CanInteract = false;
     }
 
     public void StopAnimation() {
-        m_playerMovement.CanMove = true;
+        m_playerMovement.RestrictionCounter--;
         m_playerInteract.CanInteract = true;
     }
 }

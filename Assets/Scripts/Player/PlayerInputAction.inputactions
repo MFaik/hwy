@@ -11,15 +11,8 @@
                     "id": "422f23f0-af05-4143-90a8-ee45413ca04f",
                     "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Sneak",
-                    "type": "Button",
-                    "id": "9b0a626a-e2b7-4565-bf9b-1381f746b325",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
@@ -27,7 +20,8 @@
                     "id": "20b6ae86-2eb7-43b6-9301-3787e50655e2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "AimRelative",
@@ -35,7 +29,8 @@
                     "id": "bbf47eae-6f62-4ef8-9a74-305ec12a07ec",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "AimAbsolute",
@@ -43,7 +38,8 @@
                     "id": "6c9ebd93-8a08-4c8a-8825-993ff2a4511b",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Shoot",
@@ -51,7 +47,17 @@
                     "id": "02701de6-06a0-4609-bd92-b561023d4070",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Hook",
+                    "type": "Button",
+                    "id": "d37c23c5-c5b0-48f1-a3dd-667d58297461",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Interact",
@@ -59,7 +65,8 @@
                     "id": "100979cb-ccdc-4522-ab07-f24e25a88f78",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -208,61 +215,6 @@
                 },
                 {
                     "name": "",
-                    "id": "31d9b7bd-a378-412f-b006-085159f4aeef",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "GamePad",
-                    "action": "Shoot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c9cd26e1-3550-4923-b3fd-f235d47942b4",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "GamePad",
-                    "action": "Shoot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ed23b07b-2447-406e-80b4-ce0cbb901342",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardAndMouse",
-                    "action": "Sneak",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c8390e56-1814-471f-9222-9daf8c59ed37",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "GamePad",
-                    "action": "Sneak",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "98bd8f12-3b79-42ba-af76-ebc776d5e67c",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "GamePad",
-                    "action": "Sneak",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "90ea25ef-0603-4d55-b293-f558953c817a",
                     "path": "<Mouse>/position",
                     "interactions": "",
@@ -291,6 +243,39 @@
                     "processors": "",
                     "groups": "KeyboardAndMouse",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d872cff-4614-4bf1-a6d7-746b4c4cb1b4",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAndMouse",
+                    "action": "Hook",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14fcf859-2f5e-4e91-accd-5248c5c1b826",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Hook",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "545385de-dd67-4179-a7d0-2d6c8fa41209",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Hook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

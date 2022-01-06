@@ -28,4 +28,8 @@ public class Interactable : MonoBehaviour
     public void Interact() {
         OnInteract.Invoke();
     }
+
+    void OnDestroy() {//HACK: research listeners properly
+        OnInteract.RemoveAllListeners();    
+    }
 }

@@ -16,7 +16,7 @@ public class SaveSystem
 
     static Dictionary<string, ProgressEnum> s_progressStringToEnum;
 
-    static string s_fileName = "/save.cu";
+    static string s_fileName = "/save1.cu";
     public static SaveObject SaveData;
     public static void SaveGame() {
         string filePath = Application.persistentDataPath + s_fileName;  
@@ -42,8 +42,9 @@ public class SaveSystem
 
         string filePath = Application.persistentDataPath + s_fileName;  
 
-        if(File.Exists(filePath))
-        {
+        if(!File.Exists(filePath)){
+            SaveData = new SaveObject();
+        } else {
             FileStream dataStream = new FileStream(filePath, FileMode.Open);
 
             BinaryFormatter converter = new BinaryFormatter();
@@ -51,22 +52,21 @@ public class SaveSystem
 
             dataStream.Close();
             SaveData = saveData;
-            
-            //backwards compatibility
-            if(SaveData.m_progress == null)
-                SaveData.m_progress = new Dictionary<ProgressEnum, bool>();
-
-            foreach(ProgressEnum progress in Enum.GetValues(typeof(ProgressEnum))){
-                if(!SaveData.m_progress.ContainsKey(progress))
-                    SaveData.m_progress.Add(progress, false);
-            }
-
-            if(SaveData.dialogueFlags == null)
-                SaveData.dialogueFlags = new Dictionary<string, bool>();
-
-            return;  
         }
-        SaveData = new SaveObject();
+
+        //backwards compatibility
+        if(SaveData.m_progress == null)
+            SaveData.m_progress = new Dictionary<ProgressEnum, bool>();
+
+        foreach(ProgressEnum progress in Enum.GetValues(typeof(ProgressEnum))){
+            if(!SaveData.m_progress.ContainsKey(progress)){
+                SaveData.m_progress.Add(progress, false);
+                Debug.LogWarning("Added missing progress to savefile: " + progress);
+            }
+        }
+
+        if(SaveData.dialogueFlags == null)
+            SaveData.dialogueFlags = new Dictionary<string, bool>();
     }
 
     public static UnityEvent<bool> GetProgressEvent(ProgressEnum progress) {
@@ -90,6 +90,7 @@ public class SaveSystem
             Debug.LogError("progress key doesn't exist");
             return;
         }
+        //Debug.Log((new System.Diagnostics.StackTrace()).GetFrame(1).GetMethod().Name);
         GetProgressEvent(progress).Invoke(value);
         SaveData.m_progress[progress] = value;
     }

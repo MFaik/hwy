@@ -5,6 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerShootController : MonoBehaviour
 {
+    public Vector2 AimDirection;
+
+    bool m_hasGun;
+
     [SerializeField] GameObject Bullet;
     [SerializeField] float BulletVelocity = 10;
     [SerializeField] float Firerate = .3f;
@@ -22,24 +26,30 @@ public class PlayerShootController : MonoBehaviour
     void Start() {
         m_camera = Camera.main;
         m_shootTimer = Firerate;
+
+        m_hasGun = SaveSystem.GetProgress(ProgressEnum.PlayerHasGun);
+        //FIXME: when player is destroyed what happens to Listeners? 
+        SaveSystem.GetProgressEvent(ProgressEnum.PlayerHasGun).AddListener((bool progress) => m_hasGun = progress);
     }
 
     void Update() {
+        Vector2 shootDir;
+
+        if(m_isAbsoluteAim){
+            shootDir = m_camera.ScreenToWorldPoint(m_absoluteAimPos) - transform.position;
+            if(shootDir.sqrMagnitude < (.1f))
+                shootDir = Vector2.zero;
+            else 
+                shootDir.Normalize();
+        } else
+            shootDir = m_relativeAim;
+
+        AimDirection = shootDir;
+
         if(m_shootTimer < Firerate){
             m_shootTimer += Time.deltaTime;
 
         } else if(m_isShooting){
-            Vector2 shootDir;
-
-            if(m_isAbsoluteAim){
-                shootDir = m_camera.ScreenToWorldPoint(m_absoluteAimPos) - transform.position;
-                if(shootDir.sqrMagnitude < (.1f))
-                    shootDir = Vector2.zero;
-                else 
-                    shootDir.Normalize();
-            } else
-                shootDir = m_relativeAim;
-
             if(shootDir.sqrMagnitude != 0){
                 m_shootTimer = 0;
 

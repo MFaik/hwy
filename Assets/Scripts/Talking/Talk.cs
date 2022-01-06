@@ -25,12 +25,12 @@ public class Talk : MonoBehaviour
         GetTextMessages();
     }
 
-    public void StartTalk() {
+    public void StartTalk() {//FIXME problematic remove listener
         for(int i = 0;i < m_textMessageConditions.Count;i++){
             if(BooleanParser.Parse(ReplaceFlagsWithBools(m_textMessageConditions[i]))){
                 TextBoxManager.SetText(m_textMessageList[i], Name);
                 TextBoxManager.OnTextTrigger.AddListener(InvokeTextTrigger);
-                TextBoxManager.OnTextFinish.AddListener(()=>TextBoxManager.OnTextTrigger.RemoveListener(InvokeTextTrigger));
+                TextBoxManager.OnTextFinish.AddListener(RemoveTextTrigger);
                 return;
             }
         }
@@ -40,18 +40,23 @@ public class Talk : MonoBehaviour
         if(OnTextTrigger.Length > a)
             OnTextTrigger[a].Invoke();
     }
+    //HACK: problematic remove listener
+    void RemoveTextTrigger() {
+        TextBoxManager.OnTextTrigger.RemoveListener(InvokeTextTrigger);
+        TextBoxManager.OnTextFinish.RemoveListener(RemoveTextTrigger);
+    }
 
     void GetTextMessages() {
         m_textMessageConditions = new List<string>();
         m_textMessageList = new List<List<TextMessage>>();
         if(!TextFileReader.Texts[m_currentScene].ContainsKey(Name)){
-            Debug.LogError("Name doesn't exist");
+            Debug.LogError("Name doesn't exist : " + Name);
             return;
         }
         string[] texts = TextFileReader.Texts[m_currentScene][Name].Split('[',']');
         for(int i = 1;i < texts.Length;i += 2){
             List<TextMessage> textMessageList = new List<TextMessage>();
-            string condition = texts[i];
+            string condition = texts[i].Replace(" ","");
             string[] textMessages = texts[i+1].Split('"');
             for(int j = 0;j < textMessages.Length-1;j+=2){
                 textMessageList.Add(new TextMessage(textMessages[j].Trim(),textMessages[j+1]));
@@ -67,16 +72,6 @@ public class Talk : MonoBehaviour
         string[] words = Regex.Matches(str,@"#?[\d\w]+").OfType<Match>().Select(m => m.Value).ToArray();
 
         for(int i = 0;i < str.Length;i++){
-            if(Char.IsLetter(str[i])){
-                string wordWithName = Name + "_" + words[wordPointer];
-                if(SaveSystem.SaveData.dialogueFlags.ContainsKey(wordWithName) && SaveSystem.SaveData.dialogueFlags[wordWithName])
-                    strBuilder.Append('1');
-                else 
-                    strBuilder.Append('0');
-                
-                wordPointer++;
-                i++;
-            }
             if(str[i] == '#'){
                 if(SaveSystem.GetProgress(words[wordPointer].Substring(1)))
                     strBuilder.Append('1');
@@ -85,8 +80,23 @@ public class Talk : MonoBehaviour
                 
                 wordPointer++;
                 i++;
+            } else if(Char.IsLetterOrDigit(str[i])){
+                if(String.Equals(words[wordPointer], "1") || String.Equals(words[wordPointer], "true")){
+                    strBuilder.Append('1');
+                } else if(String.Equals(words[wordPointer], "0") || String.Equals(words[wordPointer], "false")){
+                    strBuilder.Append('0');
+                } else {
+                    string wordWithName = Name + "_" + words[wordPointer];
+                    
+                    if(SaveSystem.SaveData.dialogueFlags.ContainsKey(wordWithName) && SaveSystem.SaveData.dialogueFlags[wordWithName])
+                        strBuilder.Append('1');
+                    else 
+                        strBuilder.Append('0');
+                }
+                wordPointer++;
             }
-            while(i < str.Length && (Char.IsLetter(str[i]) || Char.IsDigit(str[i]))){
+
+            while(i < str.Length && (Char.IsLetterOrDigit(str[i]) || Char.IsWhiteSpace(str[i]))){
                 i++;
             }
             if(i >= str.Length)

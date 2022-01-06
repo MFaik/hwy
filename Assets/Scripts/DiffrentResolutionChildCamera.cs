@@ -17,7 +17,7 @@ public class DiffrentResolutionChildCamera : MonoBehaviour
         m_camera = GetComponent<Camera>();
     
         m_particleRenderer = GameObject.FindGameObjectWithTag("ParticleRenderer").GetComponent<RawImage>();
-
+            
         SetRenderTexture();
     }
 
@@ -31,6 +31,10 @@ public class DiffrentResolutionChildCamera : MonoBehaviour
     }
 
     void SetRenderTexture() {
+        if(!m_particleRenderer){
+            Debug.LogError("No Particle Renderer");
+            return;
+        }
         if(m_renderTexture)
             m_renderTexture.Release();
         m_renderTexture = new RenderTexture((int)RenderTextureSize.x, (int)RenderTextureSize.y, 16);

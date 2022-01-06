@@ -12,6 +12,7 @@ public class HealthUI : MonoBehaviour
 
     void Start() {
         PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        //FIXME: when UI is destroyed what happens to Listeners? 
         playerHealth.OnHealthChange.AddListener(UpdateHealth);
         
         m_health = playerHealth.MaxHealth;

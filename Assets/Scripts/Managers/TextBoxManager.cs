@@ -95,11 +95,12 @@ public class TextBoxManager : MonoBehaviour
             TextBox.SetActive(false);
             yield break;
         }
-
-        OnTextStart.Invoke();
+        if(!s_isTextActive){
+            OnTextStart.Invoke();
+            s_isTextActive = true;
+            TextBox.SetActive(true);
+        }
         m_startTime = Time.time;
-        s_isTextActive = true;
-        TextBox.SetActive(true);
 
         m_currentTextMessage = s_textMessages.Dequeue();
 
