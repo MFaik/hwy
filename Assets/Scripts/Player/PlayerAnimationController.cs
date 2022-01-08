@@ -37,6 +37,7 @@ public class PlayerAnimationController : MonoBehaviour
         m_playerMovement = GetComponent<PlayerMovementController>();
         m_playerMovement.OnGrounded.AddListener(OnGrounded);
         m_playerMovement.OnLeftGround.AddListener(OnLeftGround);
+        m_playerMovement.OnJumped.AddListener(OnJumped);
 
         m_playerHealth = GetComponent<PlayerHealth>();
         m_playerHealth.OnHealthChange.AddListener(OnHealthChange);
@@ -73,12 +74,14 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     public void OnLeftGround() {
-        m_animator.SetBool(GROUNDED,false);
-        if(m_rigidbody.velocity.y > 0.01f)
-            JumpDustParticle.Play();
+        m_animator.SetBool(GROUNDED,false);            
         
         TurnDustParticle.Stop();
         m_grounded = false;
+    }
+
+    public void OnJumped() {
+        JumpDustParticle.Play();
     }
 
     public void OnHealthChange(int healthChange) {

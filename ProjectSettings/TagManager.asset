@@ -25,9 +25,9 @@ TagManager:
   - Player
   - Ground
   - Ignore Player
-  - 
+  - Projectile
   - Particles
-  - 
+  - ProjectileCollider
   - 
   - 
   - 

@@ -26,11 +26,6 @@ public class PlayerHealth : MonoBehaviour
         if(other.CompareTag("Enemy")){
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
             TakeDamage((int)enemyHealth.Damage);
-        } else if(other.CompareTag("EnemyProjectile")){
-            Projectile enemyProjectile = other.GetComponent<Projectile>();
-
-            TakeDamage((int)enemyProjectile.Damage);
-            enemyProjectile.DestroySelf();
         }
     }
 
@@ -44,7 +39,7 @@ public class PlayerHealth : MonoBehaviour
         OnHealthChange.Invoke(heal);
     }
 
-    void TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
         if(Time.time - lastHitTime > IFrameTime && Health > 0){
             lastHitTime = Time.time;
             Health = Mathf.Max(Health-damage,0);

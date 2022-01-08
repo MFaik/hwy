@@ -28,8 +28,7 @@ public class PlayerShootController : MonoBehaviour
         m_shootTimer = Firerate;
 
         m_hasGun = SaveSystem.GetProgress(ProgressEnum.PlayerHasGun);
-        //FIXME: when player is destroyed what happens to Listeners? 
-        SaveSystem.GetProgressEvent(ProgressEnum.PlayerHasGun).AddListener((bool progress) => m_hasGun = progress);
+        m_hasGun = SaveSystem.GetProgress(ProgressEnum.PlayerHasGun);
     }
 
     void Update() {

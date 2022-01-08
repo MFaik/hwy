@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGroundChecker : MonoBehaviour
+public class PlayerGroundCollider : MonoBehaviour
 {
     int m_groundCounter = 0;
     PlayerMovementController m_movementController;

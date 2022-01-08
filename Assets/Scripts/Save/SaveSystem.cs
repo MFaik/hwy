@@ -12,8 +12,6 @@ public enum ProgressEnum{
 
 public class SaveSystem
 {    
-    static UnityEvent<bool>[] s_onProgressChange = new UnityEvent<bool>[Enum.GetNames(typeof(ProgressEnum)).Length];
-
     static Dictionary<string, ProgressEnum> s_progressStringToEnum;
 
     static string s_fileName = "/save1.cu";
@@ -69,13 +67,6 @@ public class SaveSystem
             SaveData.dialogueFlags = new Dictionary<string, bool>();
     }
 
-    public static UnityEvent<bool> GetProgressEvent(ProgressEnum progress) {
-        if(s_onProgressChange[(int)progress] == null)
-            s_onProgressChange[(int)progress] = new UnityEvent<bool>();
-        
-        return s_onProgressChange[(int)progress];
-    }
-
     public static void SetProgress(string name, bool value) {
         if(!s_progressStringToEnum.ContainsKey(name)){
             Debug.LogError("progress key doesn't exist");
@@ -91,7 +82,6 @@ public class SaveSystem
             return;
         }
         //Debug.Log((new System.Diagnostics.StackTrace()).GetFrame(1).GetMethod().Name);
-        GetProgressEvent(progress).Invoke(value);
         SaveData.m_progress[progress] = value;
     }
 
