@@ -17,13 +17,13 @@ public class PlayerDashManager : MonoBehaviour
 
     bool m_canDash = true,m_isDashing = false;
 
-    [SerializeField]float RecoverTime = .5f;
+    [SerializeField]float RecoverTime = .3f;
     float m_recoverTimer = 0;
     float m_dashTimer = 0;
 
     [SerializeField] AnimationCurve DashSpeedCurve;
-    [SerializeField] float DashLength = 2;
-    [SerializeField] float DashSpeed = 8f;
+    [SerializeField] float DashLength = .2f;
+    [SerializeField] float DashSpeed = 50f;
     Vector2 m_direction;
     float m_speed;
     void Start() {
@@ -47,7 +47,7 @@ public class PlayerDashManager : MonoBehaviour
                 Mathf.Atan2(m_shootController.AimDirection.y, m_shootController.AimDirection.x) * Mathf.Rad2Deg);
         } else if(m_isDashing){
             m_dashTimer -= Time.deltaTime;
-            m_rigidbody.velocity = m_direction*m_speed* DashSpeedCurve.Evaluate(1-(m_dashTimer/(DashLength/DashSpeed)));
+            m_rigidbody.velocity = m_direction*m_speed* DashSpeedCurve.Evaluate(1-m_dashTimer/DashLength);
             if(m_dashTimer <= 0){
                 StopDash();
                 m_recoverTimer = RecoverTime;
@@ -76,15 +76,16 @@ public class PlayerDashManager : MonoBehaviour
 
     void Dash() {
         if(!m_isDashing){
-            m_animationController.StartAnimation();
+            m_animationController.StartAnimation(false);
             m_isDashing = true;
             m_direction = m_projectileCollider.transform.localRotation*new Vector2(1,0);
+            if(m_rigidbody.velocity.y > 10)
+                m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x,10);
             m_speed = Mathf.Max(0, m_rigidbody.velocity.magnitude - m_movementController.MaxSpeed) + DashSpeed;
+            Debug.Log(m_rigidbody.velocity.magnitude + " -> " + m_speed);
             m_rigidbody.velocity = m_direction*m_speed;
-            m_dashTimer = 2*DashLength/m_speed;
-        } else {    
-            m_dashTimer = DashLength/m_speed;
         }
+        m_dashTimer = DashLength;
         m_rigidbody.gravityScale = 0;
     }
     void StopDash() {

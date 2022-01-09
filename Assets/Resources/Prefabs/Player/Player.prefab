@@ -10085,13 +10085,14 @@ MonoBehaviour:
   HorizontalDampOnGround: 0.3
   HorizontalDampOnAir: 0.08
   MovementInput: 0
-  GroundForgiveTime: 0.3
-  AirForgiveTime: 0.5
-  JumpVelocity: 7
+  GroundForgiveTime: 0.03
+  AirForgiveTime: 0.3
+  JumpVelocity: 13
   ShortJumpDamping: 0.8
-  LongJumpDamping: 0.1
+  LongJumpDamping: 0.3
   FallGravityMultipler: 2.5
   MaxFallSpeed: 40
+  JumpPeakCap: 0.2
   JumpRememberTime: 0.1
   GroundRememberTime: 0.1
 --- !u!114 &1838590204552306068
@@ -10343,7 +10344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2709d099ebc708b48930a8e91fdda9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RecoverTime: 0.5
+  RecoverTime: 0.3
   DashSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -10358,7 +10359,7 @@ MonoBehaviour:
       outWeight: 0.11108733
     - serializedVersion: 3
       time: 1
-      value: 0.25
+      value: 0.5
       inSlope: -0.03433862
       outSlope: -0.03433862
       tangentMode: 0
@@ -10368,8 +10369,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  DashLength: 4
-  DashSpeed: 40
+  DashLength: 0.2
+  DashSpeed: 50
 --- !u!1 &4752735978750585764
 GameObject:
   m_ObjectHideFlags: 0

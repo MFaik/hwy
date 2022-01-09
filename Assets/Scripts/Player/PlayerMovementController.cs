@@ -12,24 +12,25 @@ public class PlayerMovementController : MonoBehaviour
     public UnityEvent OnJumped;
 
     [Header("Movement")]
-    [SerializeField] float Acceleration = 40; 
+    [SerializeField] float Acceleration = 100; 
     public float MaxSpeed = 7;
     [SerializeField, Range(0,1)] float HorizontalDampOnStop = .9f;
-    [SerializeField, Range(0,1)] float HorizontalDampOnTurn = 1f;
+    [SerializeField, Range(0,1)] float HorizontalDampOnTurn = .95f;
     [SerializeField, Range(0,1)] float HorizontalDampOnGround = .3f;
     [SerializeField, Range(0,1)] float HorizontalDampOnAir = .08f;
     public float MovementInput;
-    [SerializeField] float GroundForgiveTime = .8f;
+    [SerializeField] float GroundForgiveTime = .03f;
     float m_groundForigveTimer;
-    [SerializeField] float AirForgiveTime = 1.6f;
+    [SerializeField] float AirForgiveTime = .3f;
     float m_airForgiveTimer;
     
     [Header("Jump Physics")]
-    [SerializeField] float JumpVelocity = 5f;
+    [SerializeField] float JumpVelocity = 13f;
     [SerializeField, Range(0,1)] float ShortJumpDamping = .8f;
-    [SerializeField, Range(0,1)] float LongJumpDamping = .1f;
+    [SerializeField, Range(0,1)] float LongJumpDamping = .3f;
     [SerializeField, Min(1)] float FallGravityMultipler = 2.5f;
     [SerializeField, Min(0)] float MaxFallSpeed = 40;
+    [SerializeField, Min(0)] float JumpPeakCap = .2f;
 
     bool m_isJumping;
     
@@ -47,9 +48,14 @@ public class PlayerMovementController : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
+    float maxSpeed = 0;
+
     void FixedUpdate() {
+        if(m_rigidbody.velocity.magnitude > maxSpeed){
+            maxSpeed = m_rigidbody.velocity.magnitude;
+            Debug.Log(maxSpeed);
+        }
         if(RestrictionCounter > 0){
-            // Debug.Log(RestrictionCounter);
             return;
         }
 
@@ -78,6 +84,8 @@ public class PlayerMovementController : MonoBehaviour
         //jump damping
         if(!m_isJumping && velocity.y > 0){
             velocity.y *= Mathf.Pow(1f - ShortJumpDamping, Time.deltaTime * 10f);
+            if(velocity.y < JumpPeakCap)
+                velocity.y = 0;
         } else if(velocity.y > 0){
             velocity.y *= Mathf.Pow(1f - LongJumpDamping,Time.deltaTime * 10f);
         }
