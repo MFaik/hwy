@@ -100,15 +100,31 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     public void StartAnimation(bool stop) {
-        // Debug.Log((new System.Diagnostics.StackTrace()).GetFrame(1).GetMethod().Name);
         if(stop)
             m_rigidbody.velocity = Vector2.zero;
-        m_playerMovement.RestrictionCounter++;
+
+        m_playerMovement.InputRestrictionCounter++;
+
+        m_playerInteract.CanInteract = false;
+    }
+    public void StopAnimation() {
+        m_playerMovement.InputRestrictionCounter--;
+
+        m_playerInteract.CanInteract = true;
+    }
+
+    public void StartAnimationWithoutPlayerPhysics(bool stop) {
+        if(stop)
+            m_rigidbody.velocity = Vector2.zero;
+
+        m_playerMovement.PhysicsRestrictionCounter++;
+
         m_playerInteract.CanInteract = false;
     }
 
-    public void StopAnimation() {
-        m_playerMovement.RestrictionCounter--;
+    public void StopAnimationWithoutPlayerPhysics() {
+        m_playerMovement.PhysicsRestrictionCounter--;
+
         m_playerInteract.CanInteract = true;
     }
 }

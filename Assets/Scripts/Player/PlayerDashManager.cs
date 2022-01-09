@@ -76,20 +76,19 @@ public class PlayerDashManager : MonoBehaviour
 
     void Dash() {
         if(!m_isDashing){
-            m_animationController.StartAnimation(false);
+            m_animationController.StartAnimationWithoutPlayerPhysics(false);
             m_isDashing = true;
             m_direction = m_projectileCollider.transform.localRotation*new Vector2(1,0);
             if(m_rigidbody.velocity.y > 10)
                 m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x,10);
             m_speed = Mathf.Max(0, m_rigidbody.velocity.magnitude - m_movementController.MaxSpeed) + DashSpeed;
-            Debug.Log(m_rigidbody.velocity.magnitude + " -> " + m_speed);
             m_rigidbody.velocity = m_direction*m_speed;
         }
         m_dashTimer = DashLength;
         m_rigidbody.gravityScale = 0;
     }
     void StopDash() {
-        m_animationController.StopAnimation();
+        m_animationController.StopAnimationWithoutPlayerPhysics();
         m_isDashing = false;
         m_rigidbody.gravityScale = 1;
     }

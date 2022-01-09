@@ -28,7 +28,6 @@ public class PlayerShootController : MonoBehaviour
         m_shootTimer = Firerate;
 
         m_hasGun = SaveSystem.GetProgress(ProgressEnum.PlayerHasGun);
-        m_hasGun = SaveSystem.GetProgress(ProgressEnum.PlayerHasGun);
     }
 
     void Update() {
@@ -44,6 +43,9 @@ public class PlayerShootController : MonoBehaviour
             shootDir = m_relativeAim;
 
         AimDirection = shootDir;
+
+        if(!m_hasGun)
+            return;
 
         if(m_shootTimer < Firerate){
             m_shootTimer += Time.deltaTime;

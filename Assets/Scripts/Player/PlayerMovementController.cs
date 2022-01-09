@@ -42,14 +42,15 @@ public class PlayerMovementController : MonoBehaviour
 
     bool m_grounded;
 
-    [System.NonSerialized] public int RestrictionCounter = 0;
+    [System.NonSerialized] public int PhysicsRestrictionCounter = 0;
+    [System.NonSerialized] public int InputRestrictionCounter = 0;
 
     void Start() {
         m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate() {
-        if(RestrictionCounter > 0){
+        if(PhysicsRestrictionCounter > 0){
             return;
         }
 
@@ -129,9 +130,15 @@ public class PlayerMovementController : MonoBehaviour
         m_grounded = false;
     }
     public void OnMovement(InputAction.CallbackContext value) {
+        if(InputRestrictionCounter > 0)
+            return;
+
         MovementInput = value.ReadValue<float>();
     }
     public void OnJump(InputAction.CallbackContext value) {
+        if(InputRestrictionCounter > 0)
+            return;
+
         if(value.phase == InputActionPhase.Started){
             m_jumpTimer = JumpRememberTime;
             m_isJumping = true;

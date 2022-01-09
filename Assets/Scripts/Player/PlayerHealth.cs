@@ -25,7 +25,13 @@ public class PlayerHealth : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Enemy")){
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
-            TakeDamage((int)enemyHealth.Damage);
+            if(enemyHealth)
+                TakeDamage((int)enemyHealth.Damage);
+            else{
+                Projectile projectile = other.GetComponent<Projectile>();
+                TakeDamage((int)projectile.Damage);
+                projectile.DestroySelf();
+            }
         }
     }
 

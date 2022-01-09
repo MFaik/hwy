@@ -145,10 +145,10 @@ GameObject:
   m_Component:
   - component: {fileID: 955741139834439269}
   - component: {fileID: 955741139834439259}
-  - component: {fileID: 6910272996400153924}
+  - component: {fileID: 2704306988161564497}
   m_Layer: 0
   m_Name: PlayerCollider
-  m_TagString: EnemyProjectile
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -183,7 +183,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &6910272996400153924
+--- !u!114 &2704306988161564497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

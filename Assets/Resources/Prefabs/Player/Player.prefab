@@ -10287,7 +10287,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   DashLength: 0.2
-  DashSpeed: 50
+  DashSpeed: 28
 --- !u!1 &4752735978750585764
 GameObject:
   m_ObjectHideFlags: 0
