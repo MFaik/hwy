@@ -11809,14 +11809,6 @@ PrefabInstance:
       propertyPath: load
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4366510186582810936, guid: 90fbd9dc0fcbe5048a647c44eef6dc8d, type: 3}
-      propertyPath: debug
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4423661263791573993, guid: 90fbd9dc0fcbe5048a647c44eef6dc8d, type: 3}
-      propertyPath: debug
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4423661263791573994, guid: 90fbd9dc0fcbe5048a647c44eef6dc8d, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -11864,10 +11856,6 @@ PrefabInstance:
     - target: {fileID: 4423661263791573996, guid: 90fbd9dc0fcbe5048a647c44eef6dc8d, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5614840506086412165, guid: 90fbd9dc0fcbe5048a647c44eef6dc8d, type: 3}
-      propertyPath: m_Size.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90fbd9dc0fcbe5048a647c44eef6dc8d, type: 3}
