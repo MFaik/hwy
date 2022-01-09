@@ -48,13 +48,7 @@ public class PlayerMovementController : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    float maxSpeed = 0;
-
     void FixedUpdate() {
-        if(m_rigidbody.velocity.magnitude > maxSpeed){
-            maxSpeed = m_rigidbody.velocity.magnitude;
-            Debug.Log(maxSpeed);
-        }
         if(RestrictionCounter > 0){
             return;
         }
