@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 61716268963484646}
   - component: {fileID: 61716268963484647}
   - component: {fileID: 7536627266999261713}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Leaf
   m_TagString: EnemyProjectile
   m_Icon: {fileID: 0}

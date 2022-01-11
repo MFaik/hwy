@@ -12,13 +12,13 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] bool CanDespawn = true;
 
     void OnTriggerEnter2D(Collider2D other) {
-        if(other.CompareTag("PlayerBullet")){
-            Projectile playerBulletProjectile = other.GetComponent<Projectile>();
-            if(!playerBulletProjectile){
-                Debug.LogError("PlayerBullet doesn't have Projectile script");
+        if(other.CompareTag("PlayerProjectile")){
+            Projectile PlayerProjectileProjectile = other.GetComponent<Projectile>();
+            if(!PlayerProjectileProjectile){
+                Debug.LogError("PlayerProjectile doesn't have Projectile script");
             } else {
-                TakeDamage(playerBulletProjectile.Damage);
-                playerBulletProjectile.DestroySelf();
+                TakeDamage(PlayerProjectileProjectile.Damage);
+                PlayerProjectileProjectile.DestroySelf();
             }
         } else if(CanDespawn && other.CompareTag("EnemyDespawner")){
             GetDestroyed();

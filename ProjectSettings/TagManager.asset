@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Ground
   - Enemy
-  - PlayerBullet
   - EnemyProjectile
   - Room
   - EnemyDespawner
@@ -14,6 +13,7 @@ TagManager:
   - Interactable
   - VirtualCamera
   - ParticleRenderer
+  - PlayerProjectile
   layers:
   - Default
   - TransparentFX
@@ -25,9 +25,9 @@ TagManager:
   - Player
   - Ground
   - Ignore Player
-  - Projectile
+  - 
   - Particles
-  - ProjectileCollider
+  - 
   - 
   - 
   - 

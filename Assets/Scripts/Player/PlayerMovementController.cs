@@ -40,7 +40,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] float GroundRememberTime = .1f;
     float m_groundRememberTimer;
 
-    bool m_grounded;
+    public bool Grounded { get; private set;}
 
     [System.NonSerialized] public int PhysicsRestrictionCounter = 0;
     [System.NonSerialized] public int InputRestrictionCounter = 0;
@@ -51,22 +51,24 @@ public class PlayerMovementController : MonoBehaviour
 
     void FixedUpdate() {
         if(PhysicsRestrictionCounter > 0){
+            //m_jumpTimer = 0;
+            //m_isJumping = false;
             return;
         }
 
         Vector2 velocity = m_rigidbody.velocity;
 
-        if(m_grounded && m_groundForigveTimer > 0)
+        if(Grounded && m_groundForigveTimer > 0)
             m_groundForigveTimer -= Time.fixedDeltaTime;
-        if(!m_grounded && m_airForgiveTimer > 0)
+        if(!Grounded && m_airForgiveTimer > 0)
             m_airForgiveTimer -= Time.fixedDeltaTime;
 
         //start jump
         if(m_jumpTimer >= 0)
             m_jumpTimer -= Time.deltaTime;
-        if(!m_grounded && m_groundRememberTimer >= 0)
+        if(!Grounded && m_groundRememberTimer >= 0)
             m_groundRememberTimer -= Time.deltaTime;
-        else if(m_grounded)
+        else if(Grounded)
             m_groundRememberTimer = GroundRememberTime;
 
         if((m_jumpTimer > 0) && (m_groundRememberTimer > 0)){
@@ -85,7 +87,7 @@ public class PlayerMovementController : MonoBehaviour
             velocity.y *= Mathf.Pow(1f - LongJumpDamping,Time.deltaTime * 10f);
         }
         //fall damping
-        if(velocity.y < 0 && !m_grounded){
+        if(velocity.y < 0 && !Grounded){
             velocity.y += (FallGravityMultipler - 1) * Physics2D.gravity.y * Time.deltaTime;
             if(Mathf.Abs(velocity.y) > MaxFallSpeed){
                 velocity.y = -MaxFallSpeed;
@@ -97,9 +99,9 @@ public class PlayerMovementController : MonoBehaviour
             velocity.x *= Mathf.Pow(1f - HorizontalDampOnStop,Time.deltaTime * 10f); 
         } else if((MovementInput > 0) != (velocity.x > 0)){
             velocity.x *= Mathf.Pow(1f - HorizontalDampOnTurn,Time.deltaTime * 10f);
-        } else if(m_grounded && m_groundForigveTimer <= 0){
+        } else if(Grounded && m_groundForigveTimer <= 0){
             velocity.x *= Mathf.Pow(1f - HorizontalDampOnGround,Time.deltaTime * 10f);
-        } else if(!m_grounded && m_airForgiveTimer <= 0){
+        } else if(!Grounded && m_airForgiveTimer <= 0){
             velocity.x *= Mathf.Pow(1f - HorizontalDampOnAir,Time.deltaTime * 10f);
         }
         
@@ -122,12 +124,12 @@ public class PlayerMovementController : MonoBehaviour
         OnGrounded.Invoke();
         m_groundForigveTimer = GroundForgiveTime;
         m_groundRememberTimer = GroundRememberTime;
-        m_grounded = true;
+        Grounded = true;
     }
     public void LeaveGround() {
         OnLeftGround.Invoke();
         m_airForgiveTimer = AirForgiveTime;
-        m_grounded = false;
+        Grounded = false;
     }
     public void OnMovement(InputAction.CallbackContext value) {
         if(InputRestrictionCounter > 0)
@@ -136,8 +138,11 @@ public class PlayerMovementController : MonoBehaviour
         MovementInput = value.ReadValue<float>();
     }
     public void OnJump(InputAction.CallbackContext value) {
-        if(InputRestrictionCounter > 0)
+        if(InputRestrictionCounter > 0){
+            //m_jumpTimer = 0;
+            //m_isJumping = false;
             return;
+        }
 
         if(value.phase == InputActionPhase.Started){
             m_jumpTimer = JumpRememberTime;

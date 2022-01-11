@@ -9,13 +9,14 @@ public class PlayerDashManager : MonoBehaviour
 {
     PlayerAnimationController m_animationController;
     PlayerShootController m_shootController;
-    PlayerProjectileCollider m_projectileCollider;
     PlayerHealth m_playerHealth;
     PlayerMovementController m_movementController;
 
     Rigidbody2D m_rigidbody;
 
     bool m_canDash = true,m_isDashing = false;
+
+    Quaternion m_dashRotation;
 
     [SerializeField]float RecoverTime = .3f;
     float m_recoverTimer = 0;
@@ -28,12 +29,9 @@ public class PlayerDashManager : MonoBehaviour
     float m_speed;
     void Start() {
         m_movementController = GetComponent<PlayerMovementController>();
+
         m_animationController = GetComponent<PlayerAnimationController>();
         m_shootController = GetComponent<PlayerShootController>();
-
-        m_projectileCollider = GetComponentInChildren<PlayerProjectileCollider>();
-        if(!m_projectileCollider)
-            Debug.LogError("PlayerProjectileCollider couldn't be found");
 
         m_playerHealth = GetComponent<PlayerHealth>();
 
@@ -43,8 +41,7 @@ public class PlayerDashManager : MonoBehaviour
     void Update()
     {
         if(m_canDash){
-            m_projectileCollider.transform.localRotation = Quaternion.Euler(0,0,
-                Mathf.Atan2(m_shootController.AimDirection.y, m_shootController.AimDirection.x) * Mathf.Rad2Deg);
+            m_dashRotation = Quaternion.Euler(0,0,Mathf.Atan2(m_shootController.AimDirection.y, m_shootController.AimDirection.x) * Mathf.Rad2Deg);
         } else if(m_isDashing){
             m_dashTimer -= Time.deltaTime;
             m_rigidbody.velocity = m_direction*m_speed* DashSpeedCurve.Evaluate(1-m_dashTimer/DashLength);
@@ -53,14 +50,15 @@ public class PlayerDashManager : MonoBehaviour
                 m_recoverTimer = RecoverTime;
             }
         } else {//!m_canDash && !m_isDashing)
-            m_recoverTimer -= Time.deltaTime;
-            if(m_recoverTimer <= 0)
+            if(m_recoverTimer > 0)
+                m_recoverTimer -= Time.deltaTime;
+            else if(m_movementController.Grounded)
                 m_canDash = true;
         }
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Projectile")){
+        if(other.gameObject.CompareTag("EnemyProjectile") || other.gameObject.CompareTag("PlayerProjectile")){
             Projectile projectile = other.GetComponent<Projectile>();
             if(!m_isDashing){
                 if(other.CompareTag("EnemyProjectile")){
@@ -78,7 +76,7 @@ public class PlayerDashManager : MonoBehaviour
         if(!m_isDashing){
             m_animationController.StartAnimationWithoutPlayerPhysics(false);
             m_isDashing = true;
-            m_direction = m_projectileCollider.transform.localRotation*new Vector2(1,0);
+            m_direction = m_dashRotation*new Vector2(1,0);
             if(m_rigidbody.velocity.y > 10)
                 m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x,10);
             m_speed = Mathf.Max(0, m_rigidbody.velocity.magnitude - m_movementController.MaxSpeed) + DashSpeed;
@@ -95,14 +93,9 @@ public class PlayerDashManager : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext value) {
         if(value.phase == InputActionPhase.Started){
-            if(m_canDash){
-                Transform projectileTransform = m_projectileCollider.GetProjectile();
-                if(projectileTransform){
-                    Projectile projectile = projectileTransform.GetComponent<Projectile>();
-                    projectile.DestroySelf();
-                    m_canDash = false;
-                    Dash();
-                }
+            if(m_canDash && m_recoverTimer <= 0){
+                m_canDash = false;
+                Dash();
             }
         }
     }
