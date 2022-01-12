@@ -9917,7 +9917,7 @@ MonoBehaviour:
   FallGravityMultipler: 2.5
   MaxFallSpeed: 40
   JumpPeakCap: 0.2
-  JumpRememberTime: 0.1
+  JumpRememberTime: 0.17
   GroundRememberTime: 0.1
 --- !u!114 &1838590204552306068
 MonoBehaviour:

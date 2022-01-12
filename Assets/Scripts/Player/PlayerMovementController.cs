@@ -35,7 +35,7 @@ public class PlayerMovementController : MonoBehaviour
     bool m_isJumping;
     
     [Header("Cayote Time")]
-    [SerializeField] float JumpRememberTime = .1f;
+    [SerializeField] float JumpRememberTime = .17f;
     float m_jumpTimer;
     [SerializeField] float GroundRememberTime = .1f;
     float m_groundRememberTimer;
@@ -50,12 +50,6 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     void FixedUpdate() {
-        if(PhysicsRestrictionCounter > 0){
-            //m_jumpTimer = 0;
-            //m_isJumping = false;
-            return;
-        }
-
         Vector2 velocity = m_rigidbody.velocity;
 
         if(Grounded && m_groundForigveTimer > 0)
@@ -63,20 +57,24 @@ public class PlayerMovementController : MonoBehaviour
         if(!Grounded && m_airForgiveTimer > 0)
             m_airForgiveTimer -= Time.fixedDeltaTime;
 
-        //start jump
-        if(m_jumpTimer >= 0)
+        if(m_jumpTimer > 0)
             m_jumpTimer -= Time.deltaTime;
-        if(!Grounded && m_groundRememberTimer >= 0)
-            m_groundRememberTimer -= Time.deltaTime;
-        else if(Grounded)
-            m_groundRememberTimer = GroundRememberTime;
 
-        if((m_jumpTimer > 0) && (m_groundRememberTimer > 0)){
-            OnJumped.Invoke();
-            
-            m_jumpTimer = 0;
-            m_groundRememberTimer = 0;
-            velocity.y = JumpVelocity * 2;
+        if(PhysicsRestrictionCounter <= 0){
+            if(!Grounded && m_groundRememberTimer > 0)
+                m_groundRememberTimer -= Time.deltaTime;
+        }
+        if(Grounded && m_groundRememberTimer <= 0)
+            m_groundRememberTimer = GroundRememberTime;
+        //start jump
+        if(InputRestrictionCounter <= 0 && PhysicsRestrictionCounter <= 0){
+            if((m_jumpTimer > 0) && (m_groundRememberTimer > 0)){
+                OnJumped.Invoke();
+                
+                m_jumpTimer = 0;
+                m_groundRememberTimer = 0;
+                velocity.y = JumpVelocity * 2;
+            }
         }
         //jump damping
         if(!m_isJumping && velocity.y > 0){
@@ -95,29 +93,30 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         //movement
-        if(MovementInput == 0){
-            velocity.x *= Mathf.Pow(1f - HorizontalDampOnStop,Time.deltaTime * 10f); 
-        } else if((MovementInput > 0) != (velocity.x > 0)){
-            velocity.x *= Mathf.Pow(1f - HorizontalDampOnTurn,Time.deltaTime * 10f);
-        } else if(Grounded && m_groundForigveTimer <= 0){
-            velocity.x *= Mathf.Pow(1f - HorizontalDampOnGround,Time.deltaTime * 10f);
-        } else if(!Grounded && m_airForgiveTimer <= 0){
-            velocity.x *= Mathf.Pow(1f - HorizontalDampOnAir,Time.deltaTime * 10f);
-        }
-        
-        float movementVelocity = MovementInput * Acceleration * Time.deltaTime;
-
-        if(Mathf.Abs(velocity.x + movementVelocity) >= MaxSpeed){
-            if(movementVelocity > 0){
-                movementVelocity = Mathf.Max(0, MaxSpeed - velocity.x);
-            } else if(movementVelocity < 0){
-                movementVelocity = Mathf.Min(0,-MaxSpeed - velocity.x);
+        if(InputRestrictionCounter <= 0){
+            if(MovementInput == 0){
+                velocity.x *= Mathf.Pow(1f - HorizontalDampOnStop,Time.deltaTime * 10f); 
+            } else if((MovementInput > 0) != (velocity.x > 0)){
+                velocity.x *= Mathf.Pow(1f - HorizontalDampOnTurn,Time.deltaTime * 10f);
+            } else if(Grounded && m_groundForigveTimer <= 0){
+                velocity.x *= Mathf.Pow(1f - HorizontalDampOnGround,Time.deltaTime * 10f);
+            } else if(!Grounded && m_airForgiveTimer <= 0){
+                velocity.x *= Mathf.Pow(1f - HorizontalDampOnAir,Time.deltaTime * 10f);
             }
-        }
+            
+            float movementVelocity = MovementInput * Acceleration * Time.deltaTime;
 
-        velocity.x += movementVelocity;
-
-        m_rigidbody.velocity = velocity;
+            if(Mathf.Abs(velocity.x + movementVelocity) >= MaxSpeed){
+                if(movementVelocity > 0){
+                    movementVelocity = Mathf.Max(0, MaxSpeed - velocity.x);
+                } else if(movementVelocity < 0){
+                    movementVelocity = Mathf.Min(0,-MaxSpeed - velocity.x);
+                }
+            }
+            velocity.x += movementVelocity;
+        }   
+        if(PhysicsRestrictionCounter <= 0)
+            m_rigidbody.velocity = velocity;
     }
 
     public void GetGrounded() {
@@ -132,18 +131,9 @@ public class PlayerMovementController : MonoBehaviour
         Grounded = false;
     }
     public void OnMovement(InputAction.CallbackContext value) {
-        if(InputRestrictionCounter > 0)
-            return;
-
         MovementInput = value.ReadValue<float>();
     }
     public void OnJump(InputAction.CallbackContext value) {
-        if(InputRestrictionCounter > 0){
-            //m_jumpTimer = 0;
-            //m_isJumping = false;
-            return;
-        }
-
         if(value.phase == InputActionPhase.Started){
             m_jumpTimer = JumpRememberTime;
             m_isJumping = true;
