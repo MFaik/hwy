@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5365078606109743932}
   m_RootOrder: 3
@@ -93,6 +94,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5365078606404073454}
   m_RootOrder: 1
@@ -104,19 +106,19 @@ ParticleSystem:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5365078605869150869}
-  serializedVersion: 7
+  serializedVersion: 8
   lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
+  emitterVelocityMode: 0
   looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
-  useRigidbodyForVelocity: 1
   startDelay:
     serializedVersion: 2
     minMaxState: 0
@@ -666,6 +668,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     maxNumParticles: 1000
+    customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -4815,6 +4818,7 @@ ParticleSystemRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -4842,9 +4846,10 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -350820589
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 3
   m_RenderMode: 0
+  m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -4868,6 +4873,10 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+  m_MeshWeighting: 1
+  m_MeshWeighting1: 1
+  m_MeshWeighting2: 1
+  m_MeshWeighting3: 1
   m_MaskInteraction: 0
 --- !u!1 &5365078605877651295
 GameObject:
@@ -4880,7 +4889,7 @@ GameObject:
   - component: {fileID: 5365078605877651292}
   - component: {fileID: 5365078605877651266}
   - component: {fileID: 5365078605877651293}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: StrongHitBuildUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4897,6 +4906,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5365078606109743932}
   m_RootOrder: 0
@@ -4908,19 +4918,19 @@ ParticleSystem:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5365078605877651295}
-  serializedVersion: 7
+  serializedVersion: 8
   lengthInSec: 2
   simulationSpeed: 1
   stopAction: 1
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
+  emitterVelocityMode: 0
   looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
-  useRigidbodyForVelocity: 1
   startDelay:
     serializedVersion: 2
     minMaxState: 0
@@ -5470,6 +5480,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     maxNumParticles: 1000
+    customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -9619,6 +9630,7 @@ ParticleSystemRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -9649,6 +9661,7 @@ ParticleSystemRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
+  m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -9672,6 +9685,10 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+  m_MeshWeighting: 1
+  m_MeshWeighting1: 1
+  m_MeshWeighting2: 1
+  m_MeshWeighting3: 1
   m_MaskInteraction: 0
 --- !u!1 &5365078606109743931
 GameObject:
@@ -9703,6 +9720,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 60, y: 74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5365078605877651292}
   - {fileID: 5365078606404073454}
@@ -9722,6 +9740,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -9861,7 +9880,7 @@ GameObject:
   - component: {fileID: 5365078606268271020}
   - component: {fileID: 5365078606268271058}
   - component: {fileID: 5365078606268271021}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Poof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9878,6 +9897,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5365078606109743932}
   m_RootOrder: 2
@@ -9889,19 +9909,19 @@ ParticleSystem:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5365078606268271023}
-  serializedVersion: 7
+  serializedVersion: 8
   lengthInSec: 1
   simulationSpeed: 1
   stopAction: 1
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
+  emitterVelocityMode: 1
   looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
-  useRigidbodyForVelocity: 1
   startDelay:
     serializedVersion: 2
     minMaxState: 3
@@ -10451,6 +10471,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     maxNumParticles: 1000
+    customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -14658,6 +14679,7 @@ ParticleSystemRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -14688,6 +14710,7 @@ ParticleSystemRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
+  m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -14711,6 +14734,10 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+  m_MeshWeighting: 1
+  m_MeshWeighting1: 1
+  m_MeshWeighting2: 1
+  m_MeshWeighting3: 1
   m_MaskInteraction: 0
 --- !u!1 &5365078606404073449
 GameObject:
@@ -14738,6 +14765,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5365078607487131231}
   - {fileID: 5365078605869150874}
@@ -14772,6 +14800,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5365078606404073454}
   m_RootOrder: 0
@@ -14783,19 +14812,19 @@ ParticleSystem:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5365078607487131230}
-  serializedVersion: 7
+  serializedVersion: 8
   lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
+  emitterVelocityMode: 0
   looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
-  useRigidbodyForVelocity: 1
   startDelay:
     serializedVersion: 2
     minMaxState: 0
@@ -15345,6 +15374,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     maxNumParticles: 1000
+    customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -19494,6 +19524,7 @@ ParticleSystemRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -19521,9 +19552,10 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -350820589
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 3
   m_RenderMode: 0
+  m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -19547,4 +19579,8 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+  m_MeshWeighting: 1
+  m_MeshWeighting1: 1
+  m_MeshWeighting2: 1
+  m_MeshWeighting3: 1
   m_MaskInteraction: 0

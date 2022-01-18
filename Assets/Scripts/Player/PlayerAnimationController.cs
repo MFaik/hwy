@@ -44,8 +44,8 @@ public class PlayerAnimationController : MonoBehaviour
 
         m_playerInteract = GetComponent<PlayerIntreactManager>();
 
-        TextBoxManager.OnTextStart.AddListener(StartAnimation);
-        TextBoxManager.OnTextFinish.AddListener(StopAnimation);
+        TextBoxManager.Instance.OnTextStart.AddListener(StartAnimation);
+        TextBoxManager.Instance.OnTextFinish.AddListener(StopAnimation);
     }
 
     void Update() {

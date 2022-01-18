@@ -28,9 +28,9 @@ public class Talk : MonoBehaviour
     public void StartTalk() {//FIXME problematic remove listener
         for(int i = 0;i < m_textMessageConditions.Count;i++){
             if(BooleanParser.Parse(ReplaceFlagsWithBools(m_textMessageConditions[i]))){
-                TextBoxManager.SetText(m_textMessageList[i], Name);
-                TextBoxManager.OnTextTrigger.AddListener(InvokeTextTrigger);
-                TextBoxManager.OnTextFinish.AddListener(RemoveTextTrigger);
+                TextBoxManager.Instance.SetText(m_textMessageList[i], Name);
+                TextBoxManager.Instance.OnTextTrigger.AddListener(InvokeTextTrigger);
+                TextBoxManager.Instance.OnTextFinish.AddListener(RemoveTextTrigger);
                 return;
             }
         }
@@ -42,8 +42,8 @@ public class Talk : MonoBehaviour
     }
     //HACK: problematic remove listener
     void RemoveTextTrigger() {
-        TextBoxManager.OnTextTrigger.RemoveListener(InvokeTextTrigger);
-        TextBoxManager.OnTextFinish.RemoveListener(RemoveTextTrigger);
+        TextBoxManager.Instance.OnTextTrigger.RemoveListener(InvokeTextTrigger);
+        TextBoxManager.Instance.OnTextFinish.RemoveListener(RemoveTextTrigger);
     }
 
     void GetTextMessages() {

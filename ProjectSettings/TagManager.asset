@@ -26,8 +26,8 @@ TagManager:
   - Ground
   - Ignore Player
   - 
-  - Particles
-  - 
+  - Pixel Perfect BG
+  - Pixel Perfect FG
   - 
   - 
   - 
@@ -51,12 +51,15 @@ TagManager:
   - name: BackGround
     uniqueID: 3944146707
     locked: 0
+  - name: Pixel Perfect BG
+    uniqueID: 264465583
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Player
     uniqueID: 1893292133
     locked: 0
-  - name: Particles
+  - name: Pixel Perfect FG
     uniqueID: 1282106143
     locked: 0

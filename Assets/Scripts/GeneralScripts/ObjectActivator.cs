@@ -5,19 +5,21 @@ using MyBox;
 
 public class ObjectActivator : MonoBehaviour
 {
-    [SerializeField] GameObject Object;
+    [SerializeField] List<GameObject> GameObjects = new List<GameObject>();
     [SerializeField] bool IsToggle = false;
     [SerializeField,Tag] string TagCheck;
 
     void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag(TagCheck)){
-            Object.SetActive(true);
+            foreach (GameObject gameObject in GameObjects)
+                gameObject.SetActive(true);
         }
     }
 
     void OnTriggerExit2D(Collider2D other) {
         if(IsToggle && other.CompareTag(TagCheck)){
-            Object.SetActive(false);
+            foreach (GameObject gameObject in GameObjects)
+                gameObject.SetActive(false);
         }    
     }
 }

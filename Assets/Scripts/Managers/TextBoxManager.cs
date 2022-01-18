@@ -23,20 +23,34 @@ public class TextMessage
 
 public class TextBoxManager : MonoBehaviour
 {
-    public static UnityEvent OnTextStart = new UnityEvent();
-    public static UnityEvent OnTextFinish = new UnityEvent();
-    public static UnityEvent<int> OnTextTrigger = new UnityEvent<int>();
+    public UnityEvent OnTextStart = new UnityEvent();
+    public UnityEvent OnTextFinish = new UnityEvent();
+    public UnityEvent<int> OnTextTrigger = new UnityEvent<int>();
 
     [SerializeField] GameObject TextBox;
     [SerializeField] Image PP;
     [SerializeField] TextMeshProUGUI TextMesh;
 
-    static TextBoxManager s_instance;
+    public static TextBoxManager Instance
+    {
+        get
+        {
+            if(instance == null)
+                instance = FindObjectOfType(typeof(TextBoxManager)) as TextBoxManager;
+ 
+            return instance;
+        }
+        set
+        {
+            instance = value;
+        }
+    }
+    private static TextBoxManager instance;
 
-    static Queue<TextMessage> s_textMessages = new Queue<TextMessage>();
-    static bool s_isTextActive = false;
+    Queue<TextMessage> m_textMessages = new Queue<TextMessage>();
+    bool m_isTextActive = false;
 
-    static string s_textIndex;
+    string m_textIndex;
 
     Dictionary<string,Sprite[]> m_emotes;
     Dictionary<string,EmoteEnum> m_emoteStringToEnum;
@@ -50,10 +64,6 @@ public class TextBoxManager : MonoBehaviour
     float m_textWaitTimer = 0;
 
     void Start() {
-        if(s_instance)
-            Destroy(gameObject);
-        s_instance = this;
-
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<PlayerInput>().actions["Interact"].started += AdvanceText;
 
@@ -71,38 +81,38 @@ public class TextBoxManager : MonoBehaviour
         }
     } 
 
-    public static void SetText(TextMessage text, string textIndex) {
-        s_textIndex = textIndex; 
-        s_textMessages.Enqueue(text);
+    public void SetText(TextMessage text, string textIndex) {
+        m_textIndex = textIndex; 
+        m_textMessages.Enqueue(text);
 
-        if(!s_isTextActive)
-            s_instance.StartCoroutine(nameof(ReadText));
+        if(!m_isTextActive)
+            StartCoroutine(nameof(ReadText));
     }
 
-    public static void SetText(List<TextMessage> textList, string textIndex) {
-        s_textIndex = textIndex;
+    public void SetText(List<TextMessage> textList, string textIndex) {
+        m_textIndex = textIndex;
         foreach(TextMessage text in textList)
-            s_textMessages.Enqueue(text);
+            m_textMessages.Enqueue(text);
         
-        if(!s_isTextActive)
-            s_instance.StartCoroutine(nameof(ReadText));
+        if(!m_isTextActive)
+            StartCoroutine(nameof(ReadText));
     }
 
     IEnumerator ReadText() {
-        if(s_textMessages.Count <= 0){
+        if(m_textMessages.Count <= 0){
             OnTextFinish.Invoke();
-            s_isTextActive = false;
+            m_isTextActive = false;
             TextBox.SetActive(false);
             yield break;
         }
-        if(!s_isTextActive){
+        if(!m_isTextActive){
             OnTextStart.Invoke();
-            s_isTextActive = true;
+            m_isTextActive = true;
             TextBox.SetActive(true);
         }
         m_startTime = Time.time;
 
-        m_currentTextMessage = s_textMessages.Dequeue();
+        m_currentTextMessage = m_textMessages.Dequeue();
 
         if(!m_emotes.ContainsKey(m_currentTextMessage.Character)){
             Debug.LogError("Emotes doesn't exist for character: " + m_currentTextMessage.Character);
@@ -159,7 +169,7 @@ public class TextBoxManager : MonoBehaviour
                 m_speed = float.Parse(tag.Split('=')[1], CultureInfo.InvariantCulture);
             }
         } else if(StringStartsWith(tag, "set=")){
-            SaveSystem.SaveData.dialogueFlags[s_textIndex + "_" + tag.Split('=')[1]] = true;
+            SaveSystem.SaveData.dialogueFlags[m_textIndex + "_" + tag.Split('=')[1]] = true;
         } else if(StringStartsWith(tag, "trigger=")){
             OnTextTrigger.Invoke(int.Parse(tag.Split('=')[1]));
         }
@@ -188,7 +198,7 @@ public class TextBoxManager : MonoBehaviour
         }
 
     public void AdvanceText(InputAction.CallbackContext value) {
-        if(!s_isTextActive)
+        if(!m_isTextActive)
             return;
 
         if((Time.time - m_startTime) < 0.1f)//stop input from getting read in the same frame as text activation

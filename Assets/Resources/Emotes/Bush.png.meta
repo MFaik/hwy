@@ -42,6 +42,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -268,6 +269,13 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      bushemotes_2: -4175929094158732929
+      bushemotes_3: 4218339505690335860
+      bushemotes_4: 8384417939818715709
+      bushemotes_5: 5063461970926035217
+      bushemotes_0: -5386410388494776208
+      bushemotes_1: 8290741818301121624
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
